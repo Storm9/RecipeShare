@@ -1,0 +1,14 @@
+﻿#recipe {
+    float: left;
+    width: 500px;
+}
+
+.recipe-description {
+    font-style: italic;
+    margin-top: 0;
+}
+
+#childRecipes {
+    float: left;
+    width: 200px;
+}

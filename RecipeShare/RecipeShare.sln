@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Web
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare", "RecipeShare\RecipeShare.csproj", "{FB7FD07B-2A52-47BA-AE81-16E5C5B3DAC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeShare.Tests", "RecipeShare.Tests\RecipeShare.Tests.csproj", "{7B66F9F9-13EF-470B-9BE4-156A7852A825}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeSearchService", "..\..\Recipe\RecipeSearchService\RecipeSearchService.csproj", "{D81ADB66-51F4-47B8-95AC-DE3A85B52DEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeSearchService", "RecipeSearchService\RecipeSearchService.csproj", "{D81ADB66-51F4-47B8-95AC-DE3A85B52DEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
