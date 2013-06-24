@@ -1,14 +1,81 @@
 ﻿#recipe {
     float: left;
     width: 500px;
+    padding-right: 10px;
+    border-right: solid;
+    border-width: 1px;
 }
 
-.recipe-description {
-    font-style: italic;
-    margin-top: 0;
+#recipe .recipe-img {
+    width: 150px;
+    height: auto;
+    float: right;
 }
 
 #childRecipes {
     float: left;
-    width: 200px;
+    width: 300px;
+    padding-left: 10px;
 }
+
+#childRecipes ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+#childRecipes .recipe-img {
+    width: auto;
+    height: 75px;
+    float: left;
+}
+
+    #childRecipes li {
+        height: 75px;
+        margin: 5px 0 5px 0
+    }
+
+
+.recipe-name {
+    font-weight: bold;
+    margin: 0 0 0 0;
+}
+
+#childRecipes .rating {
+    float: right;
+}
+
+.rating {
+    display: inline-block;
+    margin: 5px 0 5px 0;
+    padding: 0;
+    height: 16px;
+    width: 80px;
+    background-image: url(../Images/star_rate.gif);
+    background-repeat: no-repeat;
+    list-style: none;
+    position: relative;
+}
+
+ul.r1 {
+    background-position-y: -16px;
+}
+
+ul.r2 {
+    background-position-y: -32px;
+}
+
+ul.r3 {
+    background-position-y: -48px;
+}
+
+ul.r4 {
+    background-position-y: -64px;
+}
+
+ul.r5 {
+    background-position-y: -80px;
+}
+
+    .rating li a {
+        position: absolute;
+    }
