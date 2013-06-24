@@ -11,6 +11,14 @@ namespace RecipeShare.DAL
     {
         protected override void Seed(RecipeContext context)
         {
+            var recipes = new List<Recipe>
+            {
+                new Recipe {ParentID = 0, Rating = 4, Votes = 1, Name = "Omelet", Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices."},
+                new Recipe {ParentID = 0, Rating = 5, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
+            };
+            recipes.ForEach(recipe => context.Recipe.Add(recipe));
+            context.SaveChanges();
+            
             var measures = new List<Measure>
             {
                 new Measure {Name = "cups"},
@@ -44,14 +52,6 @@ namespace RecipeShare.DAL
             ingredients.ForEach(ingredient => context.Ingredient.Add(ingredient));
             context.SaveChanges();
 
-            var recipes = new List<Recipe>
-            {
-                new Recipe {ParentID = 0, Rating = 4, Votes = 1, Name = "Omelet", Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices."},
-                new Recipe {ParentID = 0, Rating = 5, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
-            };
-            recipes.ForEach(recipe => context.Recipe.Add(recipe));
-            context.SaveChanges();
-
             var ingredientsList = new List<Ingredients>
             {
                 new Ingredients {RecipeID = 1, Quantity = 3, IngredientID = 1, Description = "beaten"},
@@ -71,7 +71,7 @@ namespace RecipeShare.DAL
             {
                 new Review {RecipeID = 1, Name = "Ben", Entry = "Best breakfast recipe ever!"},
                 new Review {RecipeID = 1, Name = "Johnny", Entry = "It was ok, it could use some mushrooms or something like that."},
-                new Review {RecipeID = 2, Name = "Anonymous", Entry = "Omelets suck but you don't know who said this so you can't do anything about it!"},
+                new Review {RecipeID = 1, Name = "Anonymous", Entry = "Omelets suck but you don't know who said this so you can't do anything about it!"},
                 new Review {RecipeID = 2, Name = "Ben", Entry = "Can't go wrong with this one."},
                 new Review {RecipeID = 2, Name = "PB&JLuvr13", Entry = "OMG OMG OMG This is all I eat!!!"}
             };
