@@ -12,9 +12,10 @@ namespace RecipeShare.DAL
     {
         public DbSet<Measure> Measure { get; set; }
         public DbSet<Ingredient> Ingredient { get; set; }
-        public DbSet<Ingredients> Ingredients { get; set; }
         public DbSet<Recipe> Recipe { get; set; }
+        public DbSet<Ingredients> Ingredients { get; set; }
         public DbSet<Image> Image { get; set; }
+        public DbSet<Review> Review { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

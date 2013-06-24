@@ -9,7 +9,7 @@ namespace RecipeShare.Models
     {
         public int ImageID { get; set; }
         public int RecipeID { get; set; }
-        public Uri URI { get; set; }
+        public string URI { get; set; }
         public virtual Recipe Recipe { get; set; }
     }
 }
