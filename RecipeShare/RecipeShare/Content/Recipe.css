@@ -45,7 +45,6 @@
 }
 
 .rating {
-    display: inline-block;
     margin: 5px 0 5px 0;
     padding: 0;
     height: 16px;
@@ -78,4 +77,37 @@ ul.r5 {
 
     .rating li a {
         position: absolute;
+        background: none;
+        top: 0;
+        left: 0;
+        padding: 0;
+        z-index: 20;
+        height: 16px;
+        width: 16px;
+        display: inline-block;
     }
+
+.rating .r1 a {
+    left: 0;
+}
+
+.rating .r2 a {
+    left: 16px;
+}
+
+.rating .r3 a {
+    left: 32px;
+}
+
+.rating .r4 a {
+    left: 48px;
+}
+
+.rating .r5 a {
+    left: 64px;
+}
+
+
+
+
+
