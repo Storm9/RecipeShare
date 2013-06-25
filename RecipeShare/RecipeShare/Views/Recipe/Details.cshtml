@@ -9,39 +9,65 @@
 }
 
 <section id="recipe">
-    @*<img src="" class="recipe-img" />*@
-    <h3 class="recipe-name">@Html.DisplayFor(model => model.Name)</h3>
-    <ul class="@("rating r" + Model.Rating)">
-        <li class="r1"><a href="#"></a></li>
-        <li class="r2"><a href="#"></a></li>
-        <li class="r3"><a href="#"></a></li>
-        <li class="r4"><a href="#"></a></li>
-        <li class="r5"><a href="#"></a></li>
-    </ul>
-    <ul id="ingredientsList">
-        @foreach (var ingredient in Model.Ingredients)
+    <section id="instructions">
+        @*<img src="" class="recipe-img" />*@
+        <h3 class="recipe-name">@Html.DisplayFor(model => model.Name)</h3>
+        <ul class="@("rating r" + Model.Rating)">
+            <li class="r1"><a href="#"></a></li>
+            <li class="r2"><a href="#"></a></li>
+            <li class="r3"><a href="#"></a></li>
+            <li class="r4"><a href="#"></a></li>
+            <li class="r5"><a href="#"></a></li>
+        </ul>
+        <span class="votes">
+            @Model.Votes
+            @if (Model.Votes == 1)
+            {
+                @("vote")
+            }
+            else
+            {
+                @("votes")
+            }
+        </span>
+        <ul id="ingredientsList">
+            @foreach (var ingredient in Model.Ingredients)
+            {
+                <li>
+                    @if (ingredient.Quantity != null)
+                    {
+                        @(ingredient.Quantity + " ")
+                    }
+                    @if (ingredient.Measure != null)
+                    {
+                        @(ingredient.Measure.Name + " ")
+                    }
+                    @(ingredient.Ingredient.Name)
+                    @if (ingredient.Description != null)
+                    {
+                        @(" (" + ingredient.Description + ")")
+                    }
+                </li>
+            }
+        </ul>
+
+        <p id="procedure">
+            @(Model.Instructions)
+        </p>
+    </section>
+
+    <section id="reviews">
+        <h3>Reviews:</h3>
+    <ul>
+        @foreach (var review in Model.Reviews)
         {
             <li>
-                @if (ingredient.Quantity != null)
-                {
-                    @(ingredient.Quantity + " ")
-                }
-                @if (ingredient.Measure != null)
-                {
-                    @(ingredient.Measure.Name + " ")
-                }
-                @(ingredient.Ingredient.Name)
-                @if (ingredient.Description != null)
-                {
-                    @(" (" + ingredient.Description + ")")
-                }
+                <h3 class="review-author">@review.Name</h3>
+                <p class="review">@review.Entry</p>
             </li>
         }
     </ul>
-
-    <section id="procedure">
-        @(Model.Instructions)
-    </section>
+        </section>
 
 </section>
 
@@ -58,7 +84,8 @@
 </section>
 *@
 
-@*<h2>Details</h2>
+@*
+<h2>Details</h2>
 
 <fieldset>
     <legend>Recipe</legend>
@@ -148,4 +175,5 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeID }) |
     @Html.ActionLink("Back to List", "Index")
-</p>*@
+</p>
+*@

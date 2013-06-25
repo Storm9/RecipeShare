@@ -1,15 +1,18 @@
 ﻿#recipe {
     float: left;
-    width: 500px;
+    width: 600px;
+}
+
+    #recipe .recipe-img {
+        width: 150px;
+        height: auto;
+        float: right;
+    }
+
+#instructions {
     padding-right: 10px;
     border-right: solid;
     border-width: 1px;
-}
-
-#recipe .recipe-img {
-    width: 150px;
-    height: auto;
-    float: right;
 }
 
 #childRecipes {
@@ -18,29 +21,33 @@
     padding-left: 10px;
 }
 
-#childRecipes ul {
-    padding-left: 0;
-    list-style-type: none;
-}
+    #childRecipes ul {
+        padding-left: 0;
+        list-style-type: none;
+    }
 
-#childRecipes .recipe-img {
-    width: auto;
-    height: 75px;
-    float: left;
-}
+    #childRecipes .recipe-img {
+        width: auto;
+        height: 75px;
+        float: left;
+    }
 
     #childRecipes li {
         height: 75px;
-        margin: 5px 0 5px 0
+        margin: 5px 0 5px 0;
     }
 
-#childRecipes .rating {
-    float: right;
-}
+    #childRecipes .rating {
+        float: right;
+    }
 
 .recipe-name {
     font-weight: bold;
     margin: 0 0 0 0;
+}
+
+.votes {
+    color: #808080;
 }
 
 /*
@@ -56,6 +63,18 @@
     list-style: none;
     position: relative;
 }
+
+    .rating li a {
+        position: absolute;
+        background: none;
+        top: 0;
+        left: 0;
+        padding: 0;
+        z-index: 20;
+        height: 16px;
+        width: 16px;
+        display: inline-block;
+    }
 
 ul.r1 {
     background-position-y: -16px;
@@ -77,18 +96,6 @@ ul.r5 {
     background-position-y: -80px;
 }
 
-    .rating li a {
-        position: absolute;
-        background: none;
-        top: 0;
-        left: 0;
-        padding: 0;
-        z-index: 20;
-        height: 16px;
-        width: 16px;
-        display: inline-block;
-    }
-
 .rating .r1 a {
     left: 0;
 }
@@ -109,5 +116,39 @@ ul.r5 {
     left: 64px;
 }
 
+#reviews {
+    margin: 16px 16px 0 0;
+}
 
+    #reviews ul {
+        list-style: none;
+        padding: 0;
+        border: solid;
+        border-width: 1px;
+        border-color: #c8c8c8;
+        margin-left: 16px;
+    }
+
+    #reviews ul li {
+        padding: 5px;
+        margin: 0;
+    }
+
+        #reviews li:nth-child(2n) {
+            background-color: #f8f8f8;
+        }
+
+        #reviews li:nth-child(2n+1) {
+            background-color: #dcdcdc;
+        }
+
+.review-author {
+    margin: 0;
+    font-size: 12pt;
+    color: #676767;
+}
+
+.review {
+    margin: 10px 0 0 10px;
+}
 
