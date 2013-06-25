@@ -1,10 +1,64 @@
 ﻿@model RecipeShare.Models.Recipe
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
 }
 
-<h2>Details</h2>
+@section css {
+    <link href="@Url.Content("~/Content/Recipe.css")" rel="stylesheet"/>
+}
+
+<section id="recipe">
+    @*<img src="" class="recipe-img" />*@
+    <h3 class="recipe-name">@Html.DisplayFor(model => model.Name)</h3>
+    <ul class="@("rating r" + Model.Rating)">
+        <li class="r1"><a href="#"></a></li>
+        <li class="r2"><a href="#"></a></li>
+        <li class="r3"><a href="#"></a></li>
+        <li class="r4"><a href="#"></a></li>
+        <li class="r5"><a href="#"></a></li>
+    </ul>
+    <ul id="ingredientsList">
+        @foreach (var ingredient in Model.Ingredients)
+        {
+            <li>
+                @if (ingredient.Quantity != null)
+                {
+                    @(ingredient.Quantity + " ")
+                }
+                @if (ingredient.Measure != null)
+                {
+                    @(ingredient.Measure.Name + " ")
+                }
+                @(ingredient.Ingredient.Name)
+                @if (ingredient.Description != null)
+                {
+                    @(" (" + ingredient.Description + ")")
+                }
+            </li>
+        }
+    </ul>
+
+    <section id="procedure">
+        @(Model.Instructions)
+    </section>
+
+</section>
+
+@*
+<section id="childRecipes">
+    <h3>Related Recipes</h3>
+    <ul>
+        <li>
+            <img src="" class="recipe-img" />
+            <p class="recipe-name">Marmite and Pickle</p>
+            <span class="rating"></span>
+        </li>
+    </ul>
+</section>
+*@
+
+@*<h2>Details</h2>
 
 <fieldset>
     <legend>Recipe</legend>
@@ -94,4 +148,4 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeID }) |
     @Html.ActionLink("Back to List", "Index")
-</p>
+</p>*@
