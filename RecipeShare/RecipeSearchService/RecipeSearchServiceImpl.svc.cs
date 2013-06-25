@@ -7,6 +7,7 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Data.Linq;
 
 namespace RecipeSearchService
 {
@@ -34,15 +35,23 @@ namespace RecipeSearchService
         public string GetRecipeNameById(int id)
         {
             string connectionString = GetSqlConnection();
+            SqlConnection conn = new SqlConnection(connectionString);
+            RecipeSearchDataClassesDataContext dc = new RecipeSearchDataClassesDataContext(conn);
+   
             try
             {
-                SqlConnection conn = new SqlConnection(connectionString);
-                conn.Open();
-                Console.WriteLine("Conn State: " + conn.State.ToString());
+                var recipeNameQuery = 
+                    from recipe in dc.Recipes
+                    where recipe.RecipeID == id
+                    select recipe.Name;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                //TODO: Log
+            }
+            finally
+            {
+                conn.Close();
             }
             return null;
         }
