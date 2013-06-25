@@ -10,10 +10,10 @@
     <legend>Recipe</legend>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.ParentID)
+         @Html.DisplayNameFor(model => model.Name)
     </div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.ParentID)
+        @Html.DisplayFor(model => model.Name)
     </div>
 
     <div class="display-label">
@@ -31,11 +31,35 @@
     </div>
 
     <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
-    </div>
+    @Html.LabelFor(model => model.Ingredients)
+</div>
+<div class="display-field">
+    <table>
+        <tr>
+            <th>Quantity</th>
+            <th>Measure</th>
+            <th>Ingredient</th>
+            <th>Description</th>
+        </tr>
+        @foreach (var item in Model.Ingredients)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Measure.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ingredient.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
 
     <div class="display-label">
          @Html.DisplayNameFor(model => model.Instructions)
@@ -43,6 +67,29 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Instructions)
     </div>
+
+    <div class="display-label">
+    @Html.LabelFor(model => model.Reviews)
+</div>
+<div class="display-field">
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Entry</th>
+        </tr>
+        @foreach (var item in Model.Reviews)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Entry)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
 </fieldset>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeID }) |
