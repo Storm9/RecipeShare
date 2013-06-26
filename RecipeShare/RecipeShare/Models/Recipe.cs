@@ -13,8 +13,8 @@ namespace RecipeShare.Models
         public int Votes { get; set; }
         public string Name { get; set; }
         public string Instructions { get; set; }
-        public virtual ICollection<Ingredients> Ingredients { get; set; }
-        public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Ingredient> Ingredient { get; set; }
+        public virtual ICollection<Image> Image { get; set; }
+        public virtual ICollection<Review> Review { get; set; }
     }
 }

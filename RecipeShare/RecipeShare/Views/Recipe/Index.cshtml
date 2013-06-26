@@ -6,6 +6,15 @@
 
 <h2>Index</h2>
 
+<p> 
+    @using (Html.BeginForm()){     
+         <p>Recipe: @Html.TextBox("recipeName")      
+         <input type="submit" value="Search" /></p>
+         <p>Ingredient: @Html.TextBox("ingredientName")      
+         <input type="submit" value="Search" /></p>
+        } 
+</p>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
