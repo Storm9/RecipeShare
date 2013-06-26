@@ -17,9 +17,22 @@ namespace RecipeShare.Controllers
         //
         // GET: /Recipe/
 
-        public ActionResult Index()
+        public ActionResult Index(string recipeName, string ingredientName)
         {
-            return View(db.Recipe.ToList());
+            var recipes = from recipe in db.Recipe select recipe;
+
+            if (!String.IsNullOrEmpty(recipeName))
+            {
+                recipes = recipes.Where(recipe => recipe.Name.Contains(recipeName));
+            }
+
+            if (!String.IsNullOrEmpty(ingredientName))
+            {
+                var recipeIds = from name in db.IngredientName where name.Name.Contains(ingredientName) join ingredient in db.Ingredient on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
+                recipes = (from recipe in recipes join id in recipeIds on recipe.RecipeID equals id select recipe).Distinct();
+            }
+
+            return View(recipes);
         }
 
         //
