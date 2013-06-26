@@ -8,7 +8,8 @@
     <script src="@Url.Content("~/Scripts/editrecipe.js")"></script>
 }
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -22,12 +23,50 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-        
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Ingredient)
+        </div>
+
+        <table class="editor-field">
+            <tr>
+                @{
+                    var i = Model.Ingredient.First();
+                }
+                <td>@Html.LabelFor(modelIngredient => i.Quantity)</td>
+                <td>@Html.LabelFor(modelIngredient => i.Measure)</td>
+                <td>@Html.LabelFor(modelIngredient => i.IngredientName)</td>
+                <td>@Html.LabelFor(modelIngredient => i.Description)</td>
+            </tr>
+            @foreach (var ingredient in Model.Ingredient)
+            {
+                <tr>
+                    <td>
+                        @Html.EditorFor(modelIngredient => ingredient.Quantity)
+                        @Html.ValidationMessageFor(modelIngredient => ingredient.Quantity)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelIngredient => ingredient.Measure.Name)
+                        @Html.ValidationMessageFor(modelIngredient => ingredient.Measure)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelIngredient => ingredient.IngredientName.Name)
+                        @Html.ValidationMessageFor(modelIngredient => ingredient.IngredientName)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelIngredient => ingredient.Description)
+                        @Html.ValidationMessageFor(modelIngredient => ingredient.Description)
+                    </td>
+                </tr>
+            }
+        </table>
+
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Instructions)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Instructions)
+            @Html.TextAreaFor(model => model.Instructions)
             @Html.ValidationMessageFor(model => model.Instructions)
         </div>
 
