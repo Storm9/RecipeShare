@@ -11,7 +11,8 @@
 <section id="recipe">
     <section id="instructions">
         @*<img src="" class="recipe-img" />*@
-        <h3 class="recipe-name">@Html.DisplayFor(model => model.Name)</h3>
+        <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
+        @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
         <ul class="@("rating r" + Model.Rating)">
             <li class="r1"><a href="#"></a></li>
             <li class="r2"><a href="#"></a></li>
