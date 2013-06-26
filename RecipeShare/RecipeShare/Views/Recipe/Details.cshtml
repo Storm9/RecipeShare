@@ -31,8 +31,8 @@
                 @("votes")
             }
         </span>
-        <ul id="ingredientsList">
-            @foreach (var ingredient in Model.Ingredients)
+        <ul id="ingredients">
+            @foreach (var ingredient in Model.Ingredient)
             {
                 <li>
                     @if (ingredient.Quantity != null)
@@ -43,7 +43,7 @@
                     {
                         @(ingredient.Measure.Name + " ")
                     }
-                    @(ingredient.Ingredient.Name)
+                    @(ingredient.IngredientName.Name)
                     @if (ingredient.Description != null)
                     {
                         @(" (" + ingredient.Description + ")")
@@ -60,7 +60,7 @@
     <section id="reviews">
         <h3>Reviews:</h3>
     <ul>
-        @foreach (var review in Model.Reviews)
+        @foreach (var review in Model.Review)
         {
             <li>
                 <h3 class="review-author">@review.Name</h3>
