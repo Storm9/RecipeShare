@@ -13,59 +13,41 @@ namespace RecipeSearchService
 {
     public class ReceipeSearchServiceImpl : IRecipeSearchService
     {
-        
-        public string GetData(int value)
+
+        public List<String> GetRecipeNames(string prefix)
         {
-            return string.Format("You entered: {0}", value);
+            List<String> names = new List<String>();
+            RecipeSearchDataClassesDataContext dc = GetDataContext();
+
+            var recipes =
+                from recipe in dc.Recipes
+                where recipe.Name.StartsWith(prefix)
+                select recipe;
+
+            foreach (var recipe in recipes)
+            {
+                string name = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(recipe.RecipeID.ToString(), recipe.Name);
+            }
+
+            return names;
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
-        }
-
-        public string GetRecipeNameById(int id)
-        {
-            string connectionString = GetSqlConnection();
-            SqlConnection conn = new SqlConnection(connectionString);
-            RecipeSearchDataClassesDataContext dc = new RecipeSearchDataClassesDataContext(conn);
-   
-            try
-            {
-                var recipeNameQuery = 
-                    from recipe in dc.Recipes
-                    where recipe.RecipeID == id
-                    select recipe.Name;
-            }
-            catch (Exception e)
-            {
-                //TODO: Log
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return null;
-        }
-
-        private string GetSqlConnection()
+        private SqlConnection GetSqlConnection()
         {
             if (ConfigurationManager.ConnectionStrings.Count > 0 && ConfigurationManager.ConnectionStrings["RecipeContext"] != null)
             {
-                return ConfigurationManager.ConnectionStrings["RecipeContext"].ConnectionString;
-            } else
+                return new SqlConnection(ConfigurationManager.ConnectionStrings["RecipeContext"].ConnectionString);
+            }
+            else
             {
                 return null;
             }
 
+        }
+
+        private RecipeSearchDataClassesDataContext GetDataContext()
+        {
+            return new RecipeSearchDataClassesDataContext(GetSqlConnection());
         }
     }
 }
