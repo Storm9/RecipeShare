@@ -6,7 +6,10 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
+        @RenderSection("css", required: false)
         @Scripts.Render("~/bundles/modernizr")
+        @RenderSection("javascript", required: false)
+
     </head>
     <body>
         <header>
@@ -24,6 +27,17 @@
                             <li>@Html.ActionLink("Recipes", "Index", "Recipe")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            <li>@Html.ActionLink("Add Recipe", "Create", "Recipe")</li>
+                            @*<li>
+                                @using (Html.BeginForm("Action Name", "Controller Name", FormatMethod.Get))
+                                {
+                                    @Html.TextBoxFor(m => m.Query)
+
+                                    <div>
+                                        <input type="submit" value="Search" />
+                                    </div>
+                                }
+                            </li>*@
                         </ul>
                     </nav>
                 </div>

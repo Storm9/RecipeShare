@@ -1,9 +1,85 @@
 ﻿@model RecipeShare.Models.Recipe
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
 }
 
+@section css {
+    <link href="@Url.Content("~/Content/recipe.css")" rel="stylesheet"/>
+}
+
+<section id="recipe">
+    <section id="instructions">
+        @*<img src="" class="recipe-img" />*@
+        <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
+        @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
+        @Html.Partial("_Rating", Model)
+        <span class="votes">
+            @Model.Votes
+            @if (Model.Votes == 1)
+            {
+                @("vote")
+            }
+            else
+            {
+                @("votes")
+            }
+        </span>
+        <ul id="ingredients">
+            @foreach (var ingredient in Model.Ingredient)
+            {
+                <li>
+                    @if (ingredient.Quantity != null)
+                    {
+                        @(ingredient.Quantity + " ")
+                    }
+                    @if (ingredient.Measure != null)
+                    {
+                        @(ingredient.Measure.Name + " ")
+                    }
+                    @(ingredient.IngredientName.Name)
+                    @if (ingredient.Description != null)
+                    {
+                        @(" (" + ingredient.Description + ")")
+                    }
+                </li>
+            }
+        </ul>
+
+        <p id="procedure">
+            @(Model.Instructions)
+        </p>
+    </section>
+
+    <section id="reviews">
+        <h3>Reviews:</h3>
+    <ul>
+        @foreach (var review in Model.Review)
+        {
+            <li>
+                <h3 class="review-author">@review.Name</h3>
+                <p class="review">@review.Entry</p>
+            </li>
+        }
+    </ul>
+        </section>
+
+</section>
+
+@*
+<section id="childRecipes">
+    <h3>Related Recipes</h3>
+    <ul>
+        <li>
+            <img src="" class="recipe-img" />
+            <p class="recipe-name">Marmite and Pickle</p>
+            <span class="rating"></span>
+        </li>
+    </ul>
+</section>
+*@
+
+@*
 <h2>Details</h2>
 
 <fieldset>
@@ -95,3 +171,4 @@
     @Html.ActionLink("Edit", "Edit", new { id=Model.RecipeID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+*@

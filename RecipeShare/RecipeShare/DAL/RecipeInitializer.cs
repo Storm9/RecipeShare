@@ -36,35 +36,35 @@ namespace RecipeShare.DAL
             measures.ForEach(measure => context.Measure.Add(measure));
             context.SaveChanges();
 
-            var ingredients = new List<Ingredient>
+            var ingredientNames = new List<IngredientName>
             {
-                new Ingredient {Name = "eggs"},
-                new Ingredient {Name = "bacon"},
-                new Ingredient {Name = "onion"},
-                new Ingredient {Name = "garlic"},
-                new Ingredient {Name = "spinach"},
-                new Ingredient {Name = "tomato"},
-                new Ingredient {Name = "cheese"},
-                new Ingredient {Name = "peanut butter"},
-                new Ingredient {Name = "jelly"},
-                new Ingredient {Name = "bread"}
+                new IngredientName {Name = "eggs"},
+                new IngredientName {Name = "bacon"},
+                new IngredientName {Name = "onion"},
+                new IngredientName {Name = "garlic"},
+                new IngredientName {Name = "spinach"},
+                new IngredientName {Name = "tomato"},
+                new IngredientName {Name = "cheese"},
+                new IngredientName {Name = "peanut butter"},
+                new IngredientName {Name = "jelly"},
+                new IngredientName {Name = "bread"}
             };
-            ingredients.ForEach(ingredient => context.Ingredient.Add(ingredient));
+            ingredientNames.ForEach(ingredientName => context.IngredientName.Add(ingredientName));
             context.SaveChanges();
 
-            var ingredientsList = new List<Ingredients>
+            var ingredients = new List<Ingredient>
             {
-                new Ingredients {RecipeID = 1, Quantity = 3, IngredientID = 1, Description = "beaten"},
-                new Ingredients {RecipeID = 1, Quantity = 3, MeasureID = 10, IngredientID = 2, Description = "shredded"},
-                new Ingredients {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientID = 3, Description = "finely chopped"},
-                new Ingredients {RecipeID = 1, Quantity = 5, MeasureID = 9, IngredientID = 5, Description = "shredded"},
-                new Ingredients {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientID = 6, Description = "chopped"},
-                new Ingredients {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientID = 7, Description = "finely shredded"},
-                new Ingredients {RecipeID = 2, Quantity = 2, MeasureID = 11, IngredientID = 10},
-                new Ingredients {RecipeID = 2, IngredientID = 8},
-                new Ingredients {RecipeID = 2, IngredientID = 9}
+                new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"},
+                new Ingredient {RecipeID = 1, Quantity = 3, MeasureID = 10, IngredientNameID = 2, Description = "shredded"},
+                new Ingredient {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientNameID = 3, Description = "finely chopped"},
+                new Ingredient {RecipeID = 1, Quantity = 5, MeasureID = 9, IngredientNameID = 5, Description = "shredded"},
+                new Ingredient {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientNameID = 6, Description = "chopped"},
+                new Ingredient {RecipeID = 1, Quantity = 2, MeasureID = 8, IngredientNameID = 7, Description = "finely shredded"},
+                new Ingredient {RecipeID = 2, Quantity = 2, MeasureID = 11, IngredientNameID = 10},
+                new Ingredient {RecipeID = 2, IngredientNameID = 8},
+                new Ingredient {RecipeID = 2, IngredientNameID = 9}
             };
-            ingredientsList.ForEach(ingredient => context.Ingredients.Add(ingredient));
+            ingredients.ForEach(ingredient => context.Ingredient.Add(ingredient));
             context.SaveChanges();
 
             var reviews = new List<Review>
