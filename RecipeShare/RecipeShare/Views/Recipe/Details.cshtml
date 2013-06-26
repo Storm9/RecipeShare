@@ -5,7 +5,7 @@
 }
 
 @section css {
-    <link href="@Url.Content("~/Content/Recipe.css")" rel="stylesheet"/>
+    <link href="@Url.Content("~/Content/recipe.css")" rel="stylesheet"/>
 }
 
 <section id="recipe">
@@ -13,13 +13,7 @@
         @*<img src="" class="recipe-img" />*@
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
         @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
-        <ul class="@("rating r" + Model.Rating)">
-            <li class="r1"><a href="#"></a></li>
-            <li class="r2"><a href="#"></a></li>
-            <li class="r3"><a href="#"></a></li>
-            <li class="r4"><a href="#"></a></li>
-            <li class="r5"><a href="#"></a></li>
-        </ul>
+        @Html.Partial("_Rating", Model)
         <span class="votes">
             @Model.Votes
             @if (Model.Votes == 1)

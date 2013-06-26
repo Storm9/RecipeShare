@@ -1,10 +1,12 @@
 ﻿@model RecipeShare.Models.Recipe
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editing " + Model.Name;
 }
 
-<h2>Edit</h2>
+@section javascript {
+    <script src="@Url.Content("~/Scripts/editrecipe.js")"></script>
+}
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -13,32 +15,6 @@
     <fieldset>
         <legend>Recipe</legend>
 
-        @Html.HiddenFor(model => model.RecipeID)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ParentID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ParentID)
-            @Html.ValidationMessageFor(model => model.ParentID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Rating)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Rating)
-            @Html.ValidationMessageFor(model => model.Rating)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Votes)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Votes)
-            @Html.ValidationMessageFor(model => model.Votes)
-        </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
@@ -46,7 +22,7 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.Instructions)
         </div>
