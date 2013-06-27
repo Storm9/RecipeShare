@@ -1,13 +1,5 @@
-﻿jQuery(function($) {
-    function getIngredientEditor(ingredientId) {
-        $.ajax('Ingredient/Edit/' + ingredientId,
-            function(data) {
-                $('.ingredients-list').append(data);
-            },
-            'html');
-    }
-});
-
-jQuery(document).ready(function () {
-    
+﻿jQuery(document).ready(function () {
+    $('.ingredient-editor').each(function () {
+        $(this).load('/Ingredient/Edit/' + $(this).data('ingredient'));
+    });
 });
