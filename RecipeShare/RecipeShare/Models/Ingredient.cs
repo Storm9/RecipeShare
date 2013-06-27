@@ -17,8 +17,8 @@ namespace RecipeShare.Models
         public int? MeasureID { get; set; }
         public int IngredientNameID { get; set; }
 
-        [DisplayFormat(NullDisplayText = "Enter description i.e. sliced, cubed.")]
-        [MaxLength(100)]
+        [Display(Name = "Enter description i.e. sliced, cubed.")]
+        [MaxLength(50, ErrorMessage = "Description must be 50 characters or less.")]
         public string Description { get; set; }
 
         public virtual Recipe Recipe { get; set; }

@@ -10,7 +10,8 @@ namespace RecipeShare.Models
     {
         public int MeasureID { get; set; }
 
-        [MaxLength(15)]
+        [Display(Name = "Measurement")]
+        [MaxLength(25, ErrorMessage = "Measure name must be 25 characters or less.")]
         public string Name { get; set; }
     }
 }

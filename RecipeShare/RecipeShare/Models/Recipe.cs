@@ -10,20 +10,17 @@ namespace RecipeShare.Models
     {
         public int RecipeID { get; set; }
         public int ParentID { get; set; }
-        
-        [Range(1, 5, ErrorMessage = "Rating must be between 1 and 5.")]
         public int Rating { get; set; }
-
         public int Votes { get; set; }
 
+        [Display(Name = "Enter recipe name.")]
         [Required(ErrorMessage = "Name cannot be left blank.")]
-        [DisplayFormat(NullDisplayText = "Enter recipe name.")]
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessage = "Name must be 100 characters or less.")]
         public string Name { get; set; }
 
+        [Display(Name = "Enter recipe instructions.")]
         [Required(ErrorMessage = "Instructions cannot be left blank.")]
-        [DisplayFormat(NullDisplayText = "Enter recipe instructions.")]
-        [MaxLength(500)]
+        [MaxLength(1000, ErrorMessage = "Instructions must be 1000 characters or less.")]
         public string Instructions { get; set; }
 
         public virtual ICollection<Ingredient> Ingredient { get; set; }
