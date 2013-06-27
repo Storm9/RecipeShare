@@ -13,7 +13,7 @@
         @*<img src="" class="recipe-img" />*@
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
         @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
-        @Html.Partial("_Rating", Model)
+        @Html.Partial("Rating", Model)
         <span class="votes">
             @Model.Votes
             @if (Model.Votes == 1)
