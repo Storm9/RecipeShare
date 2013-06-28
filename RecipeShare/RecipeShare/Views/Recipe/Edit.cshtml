@@ -16,6 +16,11 @@
     <fieldset>
         <legend>Recipe</legend>
 
+        @Html.HiddenFor(model => model.ParentID)
+        @Html.HiddenFor(model => model.RecipeID)
+        @Html.HiddenFor(model => model.Rating)
+        @Html.HiddenFor(model => model.Votes)
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
