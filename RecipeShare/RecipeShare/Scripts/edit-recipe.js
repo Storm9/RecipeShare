@@ -1,14 +1,20 @@
-﻿function submitChanges() {
+﻿function extractFromForm(elements) {
+    return $.map(elements, function (input) {
+        var retval = {};
+        retval[$(input).attr('name')] = $(input).val();
+        return retval;
+    }).reduce(function (previousValue, currentValue, index, array) {
+        return $.extend(previousValue, currentValue);
+    });
+}
+
+function submitChanges() {
 
     // submit changes to recipe
     $.ajax({
         type: 'POST',
         url: $('.main-content form').attr('action'),
-        data: {
-            __RequestVerificationToken: $('.main-content form input:[name="__RequestVerificationToken"]:first').val(),
-            Name: $('.main-content form input:[name="Name"]').val(),
-            Instructions: $('.main-content form input:[name="Instructions"]').val()
-        }
+        data: extractFromForm($('.main-content input:not(.ingredients-list *):not([type="button"])').add('#Instructions'))
     });
 
     // sumbint changes to ingredients
@@ -16,13 +22,7 @@
         $.ajax({
             type: 'POST',
             url: '/Ingredient/Edit/' + $(this).data('ingredient'),
-            data: $.map($(this).find('input'), function (input, i) {
-                var retval = {};
-                retval[$(input).attr('name')] = $(input).val();
-                return retval;
-            }).reduce(function (previousValue, currentValue, index, array) {
-                return $.extend(previousValue, currentValue);
-            })
+            data: extractFromForm($(this).find('input').add($(this).find('select'))),
         });
     });
 

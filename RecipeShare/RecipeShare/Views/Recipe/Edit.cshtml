@@ -12,6 +12,11 @@
     <fieldset>
         <legend>Recipe</legend>
 
+        @Html.HiddenFor(model => model.RecipeID)
+        @Html.HiddenFor(model => model.ParentID)
+        @Html.HiddenFor(model => model.Rating)
+        @Html.HiddenFor(model => model.Votes)
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
@@ -21,10 +26,13 @@
         </div>
 
         <div class="ingredients-list">
-            @foreach (var ingredient in Model.Ingredient)
+            @if (Model.Ingredient != null) 
             {
-                <div class="ingredient-editor" data-ingredient="@ingredient.IngredientID">
-                </div>
+                foreach (var ingredient in Model.Ingredient)
+                {
+                    <div class="ingredient-editor" data-ingredient="@ingredient.IngredientID">
+                    </div>
+                }
             }
         </div>
 
