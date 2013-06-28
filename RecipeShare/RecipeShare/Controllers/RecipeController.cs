@@ -97,7 +97,7 @@ namespace RecipeShare.Controllers
             {
                 db.Entry(recipe).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = recipe.RecipeID });
             }
             return View(recipe);
         }

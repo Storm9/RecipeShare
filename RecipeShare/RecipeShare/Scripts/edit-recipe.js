@@ -8,14 +8,18 @@
     });
 }
 
+function replacePage(data) {
+    var newDoc = document.open("text/html", "replace");
+    newDoc.write(data);
+    newDoc.close();
+}
+
 function submitChanges() {
 
     // submit changes to recipe
-    $.ajax({
-        type: 'POST',
-        url: $('.main-content form').attr('action'),
-        data: extractFromForm($('.main-content input:not(.ingredients-list *):not([type="button"])').add('#Instructions'))
-    });
+    $.post($('.main-content form').attr('action'),
+        extractFromForm($('.main-content input:not(.ingredients-list *):not([type="button"])').add('#Instructions')),
+        replacePage, "html");
 
     // sumbint changes to ingredients
     $('.ingredient-editor').each(function () {
