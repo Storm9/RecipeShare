@@ -1,0 +1,66 @@
+﻿@model RecipeShare.Models.Ingredient
+
+@{
+    Layout = null;
+}
+
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+    
+        <fieldset>
+            <legend>Ingredient</legend>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RecipeID, "Recipe")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("RecipeID", String.Empty)
+                @Html.ValidationMessageFor(model => model.RecipeID)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Quantity)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Quantity)
+                @Html.ValidationMessageFor(model => model.Quantity)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.MeasureID, "Measure")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("MeasureID", String.Empty)
+                @Html.ValidationMessageFor(model => model.MeasureID)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.IngredientNameID, "IngredientName")
+            </div>
+            <div class="editor-field">
+                @Html.DropDownList("IngredientNameID", String.Empty)
+                @Html.ValidationMessageFor(model => model.IngredientNameID)
+            </div>
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Description)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+    
+            <p>
+                <input type="submit" value="Create" />
+            </p>
+        </fieldset>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
