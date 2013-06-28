@@ -7,3 +7,14 @@
     <li class="r4"><a href="#"></a></li>
     <li class="r5"><a href="#"></a></li>
 </ul>
+<span class="votes">
+    @Model.Votes
+    @if (Model.Votes == 1)
+    {
+        @("vote")
+    }
+    else
+    {
+        @("votes")
+    }
+</span>

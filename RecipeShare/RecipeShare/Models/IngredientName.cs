@@ -10,9 +10,9 @@ namespace RecipeShare.Models
     {
         public int IngredientNameID { get; set; }
 
+        [Display(Name = "Enter ingredient name.")]
         [Required(ErrorMessage = "Name cannot be left blank.")]
-        [DisplayFormat(NullDisplayText = "Enter ingredient name.")]
-        [MaxLength(100)]
+        [MaxLength(50, ErrorMessage = "Name must be 50 characters or less.")]
         public string Name { get; set; }
     }
 }

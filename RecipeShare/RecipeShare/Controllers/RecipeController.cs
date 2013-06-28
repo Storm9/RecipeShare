@@ -35,6 +35,12 @@ namespace RecipeShare.Controllers
             return View(recipes);
         }
 
+        //public ActionResult Rating(int rating)
+        //{
+            
+        //    db.SaveChanges();
+        //}
+
         //
         // GET: /Recipe/Details/5
 
