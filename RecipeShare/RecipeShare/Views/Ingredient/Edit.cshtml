@@ -4,6 +4,7 @@
     Layout = null;
 }
 
+@Html.AntiForgeryToken()
 @Html.HiddenFor(model => model.IngredientID)
 @Html.HiddenFor(model => model.RecipeID)
 
