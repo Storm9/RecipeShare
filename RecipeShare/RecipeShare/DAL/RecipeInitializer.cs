@@ -14,7 +14,7 @@ namespace RecipeShare.DAL
             var recipes = new List<Recipe>
             {
                 new Recipe {ParentID = 0, Rating = 4, Votes = 1, Name = "Omelet", Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices."},
-                new Recipe {ParentID = 0, Rating = 5, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
+                new Recipe {ParentID = 0, Rating = 1, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
                 new Recipe {ParentID = 2, Rating = 3, Votes = 1, Name = "PB & Nutella Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
             };
             recipes.ForEach(recipe => context.Recipe.Add(recipe));

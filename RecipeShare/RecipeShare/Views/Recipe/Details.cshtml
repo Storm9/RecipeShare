@@ -14,17 +14,7 @@
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
         @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
         @Html.Partial("Rating", Model)
-        <span class="votes">
-            @Model.Votes
-            @if (Model.Votes == 1)
-            {
-                @("vote")
-            }
-            else
-            {
-                @("votes")
-            }
-        </span>
+        
         <ul id="ingredients">
             @foreach (var ingredient in Model.Ingredient)
             {

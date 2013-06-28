@@ -35,11 +35,23 @@ namespace RecipeShare.Controllers
             return View(recipes);
         }
 
-        //public ActionResult Rating(int rating)
-        //{
-            
-        //    db.SaveChanges();
-        //}
+        public ActionResult Rating(int recipeId, int rating)
+        {
+            Recipe recipe = db.Recipe.Find(recipeId);
+            int tempRating = recipe.Rating;
+            double newRating = (recipe.Rating * recipe.Votes + rating) / (double)(recipe.Votes + 1);
+            recipe.Rating = (int)Math.Round(newRating);
+            //System.Diagnostics.Debug.WriteLine("(" + tempRating + " * " + recipe.Votes + " + " + rating + ") / " + (recipe.Votes + 1) + " = " + recipe.Rating + " : " + newRating);
+            recipe.Votes++;
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(recipe).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Details", new { id = recipeId });
+        }
 
         //
         // GET: /Recipe/Details/5
