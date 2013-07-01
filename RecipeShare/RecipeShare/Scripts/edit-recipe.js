@@ -14,26 +14,48 @@ function replacePage(data) {
     newDoc.close();
 }
 
+function createIngredients() {
+    $('.new-ingredient').each(function () {
+        $.post('/Ingredient/Create/',
+            extractFromForm($(this).find('input').add($(this).find('select'))));
+
+    });
+}
+
 function submitChanges() {
 
     // submit changes to recipe
     $.post($('.main-content form').attr('action'),
-        extractFromForm($('.main-content input:not(.ingredients-list *):not([type="button"])').add('#Instructions')),
+        extractFromForm($('.main-content input:not(#ingredientsList *)').add('#Instructions')),
         replacePage, "html");
 
     // sumbint changes to ingredients
     $('.ingredient-editor').each(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/Ingredient/Edit/' + $(this).data('ingredient'),
-            data: extractFromForm($(this).find('input').add($(this).find('select'))),
-        });
+        $.post('/Ingredient/Edit/' + $(this).data('ingredient'), 
+            extractFromForm($(this).find('input').add($(this).find('select'))));
     });
 
+    createIngredients();
+}
+
+
+function addIngredient() {
+    $.get('/Ingredient/Create', function (data) {
+        $('#ingredientList').append(data);
+    });
 }
 
 jQuery(document).ready(function () {
     $('.ingredient-editor').each(function () {
         $(this).load('/Ingredient/Edit/' + $(this).data('ingredient'));
+    });
+
+    $('#addIngredient').click(function (event) {
+        event.preventDefault();
+        addIngredient();
+    });
+
+    $('#saveChanges').click(function(event) {
+        submitChanges();
     });
 });
