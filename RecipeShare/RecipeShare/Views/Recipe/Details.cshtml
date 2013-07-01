@@ -56,15 +56,16 @@
 
 </section>
 
-@*
+
 <section id="childRecipes">
     <h3>Related Recipes</h3>
     <ul>
-        <li>
-            <img src="" class="recipe-img" />
-            <p class="recipe-name">Marmite and Pickle</p>
-            <span class="rating"></span>
-        </li>
+        @foreach (var recipe in Model.ChildRecipes)
+        {
+            <li>
+                <p class="recipe-name">@Html.ActionLink(recipe.Name, "Details", "Recipe", new { id = recipe.RecipeID }, new { })</p>
+                @Html.Partial("Rating", recipe)
+            </li>
+        }
     </ul>
 </section>
-*@

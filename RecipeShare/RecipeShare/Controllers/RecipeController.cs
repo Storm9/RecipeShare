@@ -59,6 +59,9 @@ namespace RecipeShare.Controllers
         public ActionResult Details(int id = 0)
         {
             Recipe recipe = db.Recipe.Find(id);
+            recipe.ChildRecipes = (from child in db.Recipe
+                                   where child.ParentID == recipe.RecipeID
+                                   select child).ToList();
             if (recipe == null)
             {
                 return HttpNotFound();

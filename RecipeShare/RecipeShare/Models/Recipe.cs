@@ -26,5 +26,6 @@ namespace RecipeShare.Models
         public virtual ICollection<Ingredient> Ingredient { get; set; }
         public virtual ICollection<Image> Image { get; set; }
         public virtual ICollection<Review> Review { get; set; }
+        public virtual ICollection<Recipe> ChildRecipes { get; set; }
     }
 }

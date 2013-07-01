@@ -1,10 +1,10 @@
 ﻿@model RecipeShare.Models.Recipe
 <ul class="@("rating r" + Model.Rating)">
-    <li class="r1">@Html.ActionLink("1", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 1 }, null)</li>
-    <li class="r2">@Html.ActionLink("2", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 2 }, null)</li>
-    <li class="r3">@Html.ActionLink("3", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 3 }, null)</li>
-    <li class="r4">@Html.ActionLink("4", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 4 }, null)</li>
-    <li class="r5">@Html.ActionLink("5", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 5 }, null)</li>
+    <li class="r1">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 1 }, null)</li>
+    <li class="r2">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 2 }, null)</li>
+    <li class="r3">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 3 }, null)</li>
+    <li class="r4">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 4 }, null)</li>
+    <li class="r5">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 5 }, null)</li>
 </ul>
 <span class="votes">
     @Model.Votes

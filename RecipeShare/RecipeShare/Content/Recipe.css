@@ -58,6 +58,7 @@
     padding: 0;
     height: 16px;
     width: 80px;
+    clear: both;
     background-image: url(../Images/star_rate.gif);
     background-repeat: no-repeat;
     list-style: none;
@@ -66,7 +67,6 @@
 
     .rating li a {
         position: absolute;
-        background: none;
         top: 0;
         left: 0;
         padding: 0;
@@ -76,28 +76,24 @@
         display: inline-block;
     }
 
-ul.r1 {
-    background-position-y: -16px;
+#childRecipes .rating a {
+    display: none;
 }
 
 ul.r2 {
-    background-position-y: -32px;
+    background-position-y: -16px;
 }
 
 ul.r3 {
-    background-position-y: -48px;
+    background-position-y: -32px;
 }
 
 ul.r4 {
-    background-position-y: -64px;
+    background-position-y: -48px;
 }
 
 ul.r5 {
-    background-position-y: -80px;
-}
-
-.rating .r1 a {
-    left: 0;
+    background-position-y: -64px;
 }
 
 .rating .r2 a {
@@ -114,6 +110,38 @@ ul.r5 {
 
 .rating .r5 a {
     left: 64px;
+}
+
+.rating li a:hover {
+    z-index: 10;
+    width: 80px;
+    height: 16px;
+    overflow: hidden;
+    left: 0;
+    background-color: transparent;
+    background-image: url(../Images/star_rate.gif);
+    background-repeat: no-repeat;
+    background-position-x: -80px;
+}
+
+.rating li.r1 a:hover {
+    background-position-y: 0;
+}
+
+.rating li.r2 a:hover {
+    background-position-y: -16px;
+}
+
+.rating li.r3 a:hover {
+    background-position-y: -32px;
+}
+
+.rating li.r4 a:hover {
+    background-position-y: -48px;
+}
+
+.rating li.r5 a:hover {
+    background-position-y: -64px;
 }
 
 #reviews {
