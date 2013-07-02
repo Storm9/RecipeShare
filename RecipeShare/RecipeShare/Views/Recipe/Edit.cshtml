@@ -26,9 +26,9 @@
         </div>
 
         <div class="ingredients-list">
-            @if (Model.Ingredient != null) 
+            @if (Model.Ingredients != null) 
             {
-                foreach (var ingredient in Model.Ingredient)
+                foreach (var ingredient in Model.Ingredients)
                 {
                     <div class="ingredient-editor" data-ingredient="@ingredient.IngredientID">
                     </div>

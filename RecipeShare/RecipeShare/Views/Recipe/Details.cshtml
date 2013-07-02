@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Model.Name;
+    ViewBag.RecipeID = Model.RecipeID;
 }
 
 @section css {
@@ -53,7 +54,7 @@
         }
     </ul>
     
-    @Html.ActionLink("Add Review", "Review/" + Model.RecipeID, "Recipe")
+    @Html.ActionLink("Add Review", "Create", "Review", new { id = Model.RecipeID }, null)
 
     </section>
 

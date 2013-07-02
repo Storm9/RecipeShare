@@ -1,10 +1,12 @@
 ﻿@model RecipeShare.Models.Review
 
 @{
-    ViewBag.Title = "Create";
+    Layout = null;
 }
 
-<h2>Create</h2>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -13,13 +15,7 @@
     <fieldset>
         <legend>Review</legend>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RecipeID, "Recipe")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("RecipeID", String.Empty)
-            @Html.ValidationMessageFor(model => model.RecipeID)
-        </div>
+        @Html.HiddenFor(model => model.RecipeID, new { id = @ViewData["RecipeID"] })
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -38,15 +34,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Submit" />
         </p>
     </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

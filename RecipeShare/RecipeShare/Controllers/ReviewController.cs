@@ -19,8 +19,8 @@ namespace RecipeShare.Controllers
 
         public ActionResult Index()
         {
-            var reviews = db.Reviews.Include(r => r.Recipe);
-            return View(reviews.ToList());
+            //var reviews = db.Reviews.Include(r => r.Recipe);
+            return View(db.Reviews.ToList());
         }
 
         //
@@ -39,9 +39,9 @@ namespace RecipeShare.Controllers
         //
         // GET: /Review/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
-            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name");
+            ViewData["RecipeID"] = id;
             return View();
         }
 
@@ -56,11 +56,11 @@ namespace RecipeShare.Controllers
             {
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                
             }
 
-            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", review.RecipeID);
-            return View(review);
+            //ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", review.RecipeID);
+            return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
         }
 
         //
