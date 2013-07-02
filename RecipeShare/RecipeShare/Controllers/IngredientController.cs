@@ -19,7 +19,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Index()
         {
-            var ingredient = db.Ingredient.Include(i => i.Recipe).Include(i => i.Measure).Include(i => i.IngredientName);
+            var ingredient = db.Ingredients.Include(i => i.Recipe).Include(i => i.Measure).Include(i => i.IngredientName);
             return View(ingredient.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Ingredient ingredient = db.Ingredient.Find(id);
+            Ingredient ingredient = db.Ingredients.Find(id);
             if (ingredient == null)
             {
                 return HttpNotFound();
@@ -41,9 +41,9 @@ namespace RecipeShare.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.RecipeID = new SelectList(db.Recipe, "RecipeID", "Name");
-            ViewBag.MeasureID = new SelectList(db.Measure, "MeasureID", "Name");
-            ViewBag.IngredientNameID = new SelectList(db.IngredientName, "IngredientNameID", "Name");
+            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name");
+            ViewBag.MeasureID = new SelectList(db.Measures, "MeasureID", "Name");
+            ViewBag.IngredientNameID = new SelectList(db.IngredientNames, "IngredientNameID", "Name");
             return View();
         }
 
@@ -56,14 +56,14 @@ namespace RecipeShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Ingredient.Add(ingredient);
+                db.Ingredients.Add(ingredient);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RecipeID = new SelectList(db.Recipe, "RecipeID", "Name", ingredient.RecipeID);
-            ViewBag.MeasureID = new SelectList(db.Measure, "MeasureID", "Name", ingredient.MeasureID);
-            ViewBag.IngredientNameID = new SelectList(db.IngredientName, "IngredientNameID", "Name", ingredient.IngredientNameID);
+            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", ingredient.RecipeID);
+            ViewBag.MeasureID = new SelectList(db.Measures, "MeasureID", "Name", ingredient.MeasureID);
+            ViewBag.IngredientNameID = new SelectList(db.IngredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID);
             return View(ingredient);
         }
 
@@ -72,14 +72,14 @@ namespace RecipeShare.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Ingredient ingredient = db.Ingredient.Find(id);
+            Ingredient ingredient = db.Ingredients.Find(id);
             if (ingredient == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RecipeID = new SelectList(db.Recipe, "RecipeID", "Name", ingredient.RecipeID);
-            ViewBag.MeasureID = new SelectList(db.Measure, "MeasureID", "Name", ingredient.MeasureID);
-            ViewBag.IngredientNameID = new SelectList(db.IngredientName, "IngredientNameID", "Name", ingredient.IngredientNameID);
+            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", ingredient.RecipeID);
+            ViewBag.MeasureID = new SelectList(db.Measures, "MeasureID", "Name", ingredient.MeasureID);
+            ViewBag.IngredientNameID = new SelectList(db.IngredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID);
             return View(ingredient);
         }
 
@@ -96,9 +96,9 @@ namespace RecipeShare.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RecipeID = new SelectList(db.Recipe, "RecipeID", "Name", ingredient.RecipeID);
-            ViewBag.MeasureID = new SelectList(db.Measure, "MeasureID", "Name", ingredient.MeasureID);
-            ViewBag.IngredientNameID = new SelectList(db.IngredientName, "IngredientNameID", "Name", ingredient.IngredientNameID);
+            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", ingredient.RecipeID);
+            ViewBag.MeasureID = new SelectList(db.Measures, "MeasureID", "Name", ingredient.MeasureID);
+            ViewBag.IngredientNameID = new SelectList(db.IngredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID);
             return View(ingredient);
         }
 
@@ -107,7 +107,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Ingredient ingredient = db.Ingredient.Find(id);
+            Ingredient ingredient = db.Ingredients.Find(id);
             if (ingredient == null)
             {
                 return HttpNotFound();
@@ -122,8 +122,8 @@ namespace RecipeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ingredient ingredient = db.Ingredient.Find(id);
-            db.Ingredient.Remove(ingredient);
+            Ingredient ingredient = db.Ingredients.Find(id);
+            db.Ingredients.Remove(ingredient);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

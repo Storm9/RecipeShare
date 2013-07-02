@@ -16,7 +16,7 @@
         @Html.Partial("Rating", Model)
         
         <ul id="ingredients">
-            @foreach (var ingredient in Model.Ingredient)
+            @foreach (var ingredient in Model.Ingredients)
             {
                 <li>
                     @if (ingredient.Quantity != null)
@@ -44,7 +44,7 @@
     <section id="reviews">
         <h3>Reviews:</h3>
     <ul>
-        @foreach (var review in Model.Review)
+        @foreach (var review in Model.Reviews)
         {
             <li>
                 <h3 class="review-author">@review.Name</h3>
@@ -52,7 +52,10 @@
             </li>
         }
     </ul>
-        </section>
+    
+    @Html.ActionLink("Add Review", "Review/" + Model.RecipeID, "Recipe")
+
+    </section>
 
 </section>
 
