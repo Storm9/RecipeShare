@@ -8,6 +8,10 @@
     });
 }
 
+function ingredientFields(editor) {
+    return $(editor).find('input').add($(editor).find('select'));
+}
+
 function replacePage(data) {
     var newDoc = document.open("text/html", "replace");
     newDoc.write(data);
@@ -17,45 +21,48 @@ function replacePage(data) {
 function createIngredients() {
     $('.new-ingredient').each(function () {
         $.post('/Ingredient/Create/',
-            extractFromForm($(this).find('input').add($(this).find('select'))));
-
+            extractFromForm(ingredientFields(this)));
     });
 }
 
-function submitChanges() {
+function submitChanges(recipeID) {
 
     // submit changes to recipe
-    $.post($('.main-content form').attr('action'),
+    $.post('/Recipe/Edit/' + recipeID,
         extractFromForm($('.main-content input:not(#ingredientsList *)').add('#Instructions')),
         replacePage, "html");
 
     // sumbint changes to ingredients
     $('.ingredient-editor').each(function () {
         $.post('/Ingredient/Edit/' + $(this).data('ingredient'), 
-            extractFromForm($(this).find('input').add($(this).find('select'))));
+            extractFromForm(ingredientFields(this)));
     });
 
     createIngredients();
 }
 
-
-function addIngredient() {
+function addIngredient(recipeID) {
     $.get('/Ingredient/Create', function (data) {
-        $('#ingredientList').append(data);
+        var editor = $(data);
+        editor.children('#RecipeID').val(recipeID);
+        $('#ingredientsList').append(editor);
     });
 }
 
 jQuery(document).ready(function () {
+    var recipeID = $('.main-content form > fieldset').data("recipeid");
+
     $('.ingredient-editor').each(function () {
         $(this).load('/Ingredient/Edit/' + $(this).data('ingredient'));
     });
 
     $('#addIngredient').click(function (event) {
         event.preventDefault();
-        addIngredient();
+        addIngredient(recipeID);
     });
 
-    $('#saveChanges').click(function(event) {
+    $('#saveChanges').click(function (event) {
+        event.preventDefault();
         submitChanges();
     });
 });
