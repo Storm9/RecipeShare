@@ -15,7 +15,7 @@
     <fieldset>
         <legend>Review</legend>
 
-        @Html.HiddenFor(model => model.RecipeID, new { id = @ViewData["RecipeID"] })
+        @Html.Hidden("RecipeID", ViewData["RecipeID"])
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)

@@ -20,6 +20,6 @@ namespace RecipeShare.Models
         [MaxLength(500, ErrorMessage = "Review must be 500 characters or less.")]
         public string Entry { get; set; }
 
-        //public virtual Recipe Recipe { get; set; }
+        public virtual Recipe Recipe { get; set; }
     }
 }
