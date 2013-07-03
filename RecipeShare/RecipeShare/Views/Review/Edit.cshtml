@@ -14,14 +14,7 @@
         <legend>Review</legend>
 
         @Html.HiddenFor(model => model.ReviewID)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RecipeID, "Recipe")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("RecipeID", String.Empty)
-            @Html.ValidationMessageFor(model => model.RecipeID)
-        </div>
+        @Html.HiddenFor(model => model.RecipeID)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
@@ -46,7 +39,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Reviews", "Details", "Recipe", new { id = Model.RecipeID }, null)
 </div>
 
 @section Scripts {

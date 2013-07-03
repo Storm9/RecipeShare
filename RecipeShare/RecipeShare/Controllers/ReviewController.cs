@@ -15,29 +15,7 @@ namespace RecipeShare.Controllers
         private RecipeContext db = new RecipeContext();
 
         //
-        // GET: /Review/
-
-        public ActionResult Index()
-        {
-            //var reviews = db.Reviews.Include(r => r.Recipe);
-            return View(db.Reviews.ToList());
-        }
-
-        //
-        // GET: /Review/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Review review = db.Reviews.Find(id);
-            if (review == null)
-            {
-                return HttpNotFound();
-            }
-            return View(review);
-        }
-
-        //
-        // GET: /Review/Create
+        // GET: /Review/Create/5
 
         public ActionResult Create(int id = 0)
         {
@@ -46,7 +24,7 @@ namespace RecipeShare.Controllers
         }
 
         //
-        // POST: /Review/Create
+        // POST: /Review/Create/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -54,13 +32,14 @@ namespace RecipeShare.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (String.IsNullOrEmpty(review.Name))
+                    review.Name = "Anonymous";
                 db.Reviews.Add(review);
                 db.SaveChanges();
-                
+                return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
 
-            //ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", review.RecipeID);
-            return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
+            return View(review);
         }
 
         //
@@ -73,7 +52,6 @@ namespace RecipeShare.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", review.RecipeID);
             return View(review);
         }
 
@@ -88,9 +66,9 @@ namespace RecipeShare.Controllers
             {
                 db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
-            ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name", review.RecipeID);
+            
             return View(review);
         }
 
@@ -117,7 +95,7 @@ namespace RecipeShare.Controllers
             Review review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
         }
 
         protected override void Dispose(bool disposing)

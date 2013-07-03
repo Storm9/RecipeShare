@@ -1,12 +1,8 @@
 ﻿@model RecipeShare.Models.Review
 
 @{
-    Layout = null;
+    ViewBag.Title = "Create";
 }
-
-    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -37,4 +33,12 @@
             <input type="submit" value="Submit" />
         </p>
     </fieldset>
+}
+
+<div>
+        @Html.ActionLink("Back to Reviews", "Details", "Recipe", new { id = ViewData["RecipeID"] }, null)
+    </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

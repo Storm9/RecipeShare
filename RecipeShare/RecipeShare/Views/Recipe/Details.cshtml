@@ -43,6 +43,8 @@
     </section>
 
     <section id="reviews">
+
+        @Html.ActionLink("Add Review", "Create", "Review", new { id = Model.RecipeID }, null)
         <h3>Reviews:</h3>
         <a href="#" id="addReviewLink">Add Review...</a>
     <ul>
@@ -51,11 +53,13 @@
             <li>
                 <h3 class="review-author">@review.Name</h3>
                 <p class="review">@review.Entry</p>
+
+                @Html.ActionLink("Edit", "Edit", "Review", new { id = review.ReviewID }, null)
+                @Html.ActionLink("Delete", "Delete", "Review", new { id = review.ReviewID }, null)
+
             </li>
         }
     </ul>
-    
-    @Html.ActionLink("Add Review", "Create", "Review", new { id = Model.RecipeID }, null)
 
     </section>
 

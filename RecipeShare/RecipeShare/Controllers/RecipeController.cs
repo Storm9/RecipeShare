@@ -53,16 +53,6 @@ namespace RecipeShare.Controllers
             return RedirectToAction("Details", new { id = recipeId });
         }
 
-        public ActionResult Review(int id = 0)
-        {
-            Recipe recipe = db.Recipes.Find(id);
-            if (recipe == null)
-            {
-                return HttpNotFound();
-            }
-            return View(recipe);
-        }
-
         //
         // GET: /Recipe/Details/5
 

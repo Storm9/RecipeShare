@@ -7,12 +7,12 @@
 <h2>Index</h2>
 
 <p> 
-    @using (Html.BeginForm()){     
+    @using (Html.BeginForm())
+    {     
          <p>Recipe: @Html.TextBox("recipeName")      
+         Ingredient: @Html.TextBox("ingredientName")      
          <input type="submit" value="Search" /></p>
-         <p>Ingredient: @Html.TextBox("ingredientName")      
-         <input type="submit" value="Search" /></p>
-        } 
+    } 
 </p>
 
 <p>
@@ -32,9 +32,9 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RecipeID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RecipeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RecipeID })
+            @Html.ActionLink("Edit", "Edit", new { id = item.RecipeID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RecipeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RecipeID })
         </td>
     </tr>
 }
