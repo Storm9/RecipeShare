@@ -34,17 +34,11 @@ function submitChanges(recipeID) {
 
     // sumbint changes to ingredients
     $('.ingredient-editor').each(function () {
-        $.post('/Ingredient/Edit/' + $(this).data('ingredient'), 
+        $.post('/Ingredient/Edit/' + $(this).data('ingredient'),
             extractFromForm(ingredientFields(this)));
     });
 
     createIngredients();
-}
-
-function addIngredient(recipeID) {
-    $.get('/Ingredient/Create/' + recipeID, function (data) {
-        $('#ingredientsList').append(data);
-    });
 }
 
 jQuery(document).ready(function () {
@@ -56,7 +50,7 @@ jQuery(document).ready(function () {
 
     $('#addIngredient').click(function (event) {
         event.preventDefault();
-        addIngredient(recipeID);
+        $.get('/Ingredient/Create/' + recipeID, $(this).append);
     });
 
     $('#saveChanges').click(function (event) {
