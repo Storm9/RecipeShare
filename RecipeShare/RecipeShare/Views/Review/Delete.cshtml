@@ -10,23 +10,10 @@
 <fieldset>
     <legend>Review</legend>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Recipe.Name)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Recipe.Name)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Name)
-    </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Name)
     </div>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Entry)
-    </div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Entry)
     </div>
@@ -34,7 +21,7 @@
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="submit" value="Delete" />
+        @Html.ActionLink("Back to Reviews", "Details", "Recipe", new { id = Model.RecipeID }, null)
     </p>
 }
