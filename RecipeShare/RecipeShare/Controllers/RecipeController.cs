@@ -19,7 +19,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Index(string recipeName, string ingredientName)
         {
-            var recipes = from recipe in db.Recipe select recipe;
+            var recipes = from recipe in db.Recipes select recipe;
 
             if (!String.IsNullOrEmpty(recipeName))
             {
@@ -28,7 +28,7 @@ namespace RecipeShare.Controllers
 
             if (!String.IsNullOrEmpty(ingredientName))
             {
-                var recipeIds = from name in db.IngredientName where name.Name.Contains(ingredientName) join ingredient in db.Ingredient on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
+                var recipeIds = from name in db.IngredientNames where name.Name.Contains(ingredientName) join ingredient in db.Ingredients on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
                 recipes = (from recipe in recipes join id in recipeIds on recipe.RecipeID equals id select recipe).Distinct();
             }
 
@@ -37,7 +37,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Rating(int recipeId, int rating)
         {
-            Recipe recipe = db.Recipe.Find(recipeId);
+            Recipe recipe = db.Recipes.Find(recipeId);
             int tempRating = recipe.Rating;
             double newRating = (recipe.Rating * recipe.Votes + rating) / (double)(recipe.Votes + 1);
             recipe.Rating = (int)Math.Round(newRating);
@@ -53,13 +53,23 @@ namespace RecipeShare.Controllers
             return RedirectToAction("Details", new { id = recipeId });
         }
 
+        public ActionResult Review(int id = 0)
+        {
+            Recipe recipe = db.Recipes.Find(id);
+            if (recipe == null)
+            {
+                return HttpNotFound();
+            }
+            return View(recipe);
+        }
+
         //
         // GET: /Recipe/Details/5
 
         public ActionResult Details(int id = 0)
         {
-            Recipe recipe = db.Recipe.Find(id);
-            recipe.ChildRecipes = (from child in db.Recipe
+            Recipe recipe = db.Recipes.Find(id);
+            recipe.ChildRecipes = (from child in db.Recipes
                                    where child.ParentID == recipe.RecipeID
                                    select child).ToList();
             if (recipe == null)
@@ -86,7 +96,7 @@ namespace RecipeShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Recipe.Add(recipe);
+                db.Recipes.Add(recipe);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -99,7 +109,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Recipe recipe = db.Recipe.Find(id);
+            Recipe recipe = db.Recipes.Find(id);
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -128,7 +138,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Recipe recipe = db.Recipe.Find(id);
+            Recipe recipe = db.Recipes.Find(id);
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -143,8 +153,8 @@ namespace RecipeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Recipe recipe = db.Recipe.Find(id);
-            db.Recipe.Remove(recipe);
+            Recipe recipe = db.Recipes.Find(id);
+            db.Recipes.Remove(recipe);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

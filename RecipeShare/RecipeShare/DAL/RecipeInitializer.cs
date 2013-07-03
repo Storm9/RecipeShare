@@ -17,7 +17,7 @@ namespace RecipeShare.DAL
                 new Recipe {ParentID = 0, Rating = 1, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
                 new Recipe {ParentID = 2, Rating = 3, Votes = 1, Name = "PB & Nutella Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
             };
-            recipes.ForEach(recipe => context.Recipe.Add(recipe));
+            recipes.ForEach(recipe => context.Recipes.Add(recipe));
             context.SaveChanges();
             
             var measures = new List<Measure>
@@ -34,7 +34,7 @@ namespace RecipeShare.DAL
                 new Measure {Name = "strips"},
                 new Measure {Name = "slices"}
             };
-            measures.ForEach(measure => context.Measure.Add(measure));
+            measures.ForEach(measure => context.Measures.Add(measure));
             context.SaveChanges();
 
             var ingredientNames = new List<IngredientName>
@@ -51,7 +51,7 @@ namespace RecipeShare.DAL
                 new IngredientName {Name = "bread"},
                 new IngredientName {Name = "nutella"}
             };
-            ingredientNames.ForEach(ingredientName => context.IngredientName.Add(ingredientName));
+            ingredientNames.ForEach(ingredientName => context.IngredientNames.Add(ingredientName));
             context.SaveChanges();
 
             var ingredients = new List<Ingredient>
@@ -69,7 +69,7 @@ namespace RecipeShare.DAL
                 new Ingredient {RecipeID = 3, IngredientNameID = 8, Description = "creamy"},
                 new Ingredient {RecipeID = 3, IngredientNameID = 11},
             };
-            ingredients.ForEach(ingredient => context.Ingredient.Add(ingredient));
+            ingredients.ForEach(ingredient => context.Ingredients.Add(ingredient));
             context.SaveChanges();
 
             var reviews = new List<Review>
@@ -81,7 +81,7 @@ namespace RecipeShare.DAL
                 new Review {RecipeID = 2, Name = "PB&JLuvr13", Entry = "OMG OMG OMG This is all I eat!!!"},
                 new Review {RecipeID = 3, Name = "PB&JLuvr13", Entry = "This is outrageous! PB&J4Lyfe! Get this nutella crap outta here! 0 stars!"}
             };
-            reviews.ForEach(review => context.Review.Add(review));
+            reviews.ForEach(review => context.Reviews.Add(review));
             context.SaveChanges();
         }
     }

@@ -23,9 +23,9 @@ namespace RecipeShare.Models
         [MaxLength(1000, ErrorMessage = "Instructions must be 1000 characters or less.")]
         public string Instructions { get; set; }
 
-        public virtual ICollection<Ingredient> Ingredient { get; set; }
-        public virtual ICollection<Image> Image { get; set; }
-        public virtual ICollection<Review> Review { get; set; }
+        public virtual ICollection<Ingredient> Ingredients { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Recipe> ChildRecipes { get; set; }
     }
 }

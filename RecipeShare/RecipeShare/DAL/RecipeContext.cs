@@ -10,12 +10,12 @@ namespace RecipeShare.DAL
 {
     public class RecipeContext : DbContext
     {
-        public DbSet<Recipe> Recipe { get; set; }
-        public DbSet<Measure> Measure { get; set; }
-        public DbSet<IngredientName> IngredientName { get; set; }
-        public DbSet<Ingredient> Ingredient { get; set; }
-        public DbSet<Review> Review { get; set; }
-        public DbSet<Image> Image { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Measure> Measures { get; set; }
+        public DbSet<IngredientName> IngredientNames { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
