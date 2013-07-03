@@ -9,7 +9,7 @@
     <link href="@Url.Content("~/Content/recipe.css")" rel="stylesheet"/>
 }
 
-<section id="recipe">
+<section id="recipe" data-recipeid="@Model.RecipeID">
     <section id="instructions">
         @*<img src="" class="recipe-img" />*@
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
@@ -43,8 +43,6 @@
     </section>
 
     <section id="reviews">
-
-        @Html.ActionLink("Add Review", "Create", "Review", new { id = Model.RecipeID }, null)
         <h3>Reviews:</h3>
         <a href="#" id="addReviewLink">Add Review...</a>
     <ul>
@@ -78,3 +76,7 @@
         }
     </ul>
 </section>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/recipe-details.js");
+}

@@ -50,7 +50,9 @@ jQuery(document).ready(function () {
 
     $('#addIngredient').click(function (event) {
         event.preventDefault();
-        $.get('/Ingredient/Create/' + recipeID, $(this).append);
+        $.get('/Ingredient/Create/' + recipeID, function (data) {
+            $('#ingredientsList').append(data);
+        });
     });
 
     $('#saveChanges').click(function (event) {
