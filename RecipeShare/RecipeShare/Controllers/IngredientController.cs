@@ -39,8 +39,9 @@ namespace RecipeShare.Controllers
         //
         // GET: /Ingredient/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int recipeID = 0)
         {
+            ViewData["RecipeID"] = recipeID;
             ViewBag.RecipeID = new SelectList(db.Recipes, "RecipeID", "Name");
             ViewBag.MeasureID = new SelectList(db.Measures, "MeasureID", "Name");
             ViewBag.IngredientNameID = new SelectList(db.IngredientNames, "IngredientNameID", "Name");

@@ -42,10 +42,8 @@ function submitChanges(recipeID) {
 }
 
 function addIngredient(recipeID) {
-    $.get('/Ingredient/Create', function (data) {
-        var editor = $(data);
-        editor.children('#RecipeID').val(recipeID);
-        $('#ingredientsList').append(editor);
+    $.get('/Ingredient/Create/' + recipeID, function (data) {
+        $('#ingredientsList').append(data);
     });
 }
 
