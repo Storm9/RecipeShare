@@ -57,6 +57,6 @@ jQuery(document).ready(function () {
 
     $('#saveChanges').click(function (event) {
         event.preventDefault();
-        submitChanges();
+        submitChanges(recipeID);
     });
 });
