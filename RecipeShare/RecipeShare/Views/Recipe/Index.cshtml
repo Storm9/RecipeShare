@@ -10,38 +10,34 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
 
-@*<script type="text/javascript">
-        $(document).ready(function () {
-            $('#ingredientName').autocomplete({
-                source: '@Url.Action("AutoComplete", "Recipe")'
-            });
-                }) 
+<script type="text/javascript">
+    $(document).ready(function () {
+        autoComplete("#recipeName", "/Recipe/GetRecipes");
+        autoComplete("#ingredientName", "/Recipe/GetIngredients");
+    });
 
+    function autoComplete(id, path)
+    {
+        $(id).autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: path,
+                    type: "POST",
+                    dataType: "json",
+                    data: { term: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
 
-</script>*@
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#ingredientName").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "/Recipe/AutoComplete",
-                        type: "POST",
-                        dataType: "json",
-                        data: { term: request.term },
-                        success: function (data) {
-                            response($.map(data, function (item) {
-                                return { label: item.Name, value: item.Name };
-                            }))
-
-                        }
-                    })
-                },
-                messages: {
-                    noResults: "", results: ""
-                }
-            });
-        })
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
+    }
 </script>
 }
 

@@ -14,12 +14,18 @@ namespace RecipeShare.Controllers
     {
         private RecipeContext db = new RecipeContext();
 
-        public JsonResult AutoComplete(string input)
+        public JsonResult GetRecipes(string term)
         {
-            input = "e";
-            var result = (from name in db.IngredientNames where name.Name.ToLower().Contains(input.ToLower()) select new { name.Name }).Distinct();
+            var result = (from name in db.Recipes where name.Name.ToLower().Contains(term.ToLower()) select new { name.Name }).Distinct();
             
              return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetIngredients(string term)
+        {
+            var result = (from name in db.IngredientNames where name.Name.ToLower().Contains(term.ToLower()) select new { name.Name }).Distinct();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
         
         //
