@@ -114,6 +114,8 @@ namespace RecipeShare.Controllers
         public ActionResult Edit(int id = 0)
         {
             Recipe recipe = db.Recipes.Find(id);
+            ViewData["MeasureNames"] = (from measure in db.Measures select measure).ToList();
+            ViewData["IngredientNames"] = (from ingredient in db.IngredientNames select ingredient).ToList();
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -126,7 +128,7 @@ namespace RecipeShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Recipe recipe)
+        public ActionResult Edit(RecipeInputModel recipe)
         {
             if (ModelState.IsValid)
             {

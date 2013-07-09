@@ -187,6 +187,7 @@
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Measure.cs" />
     <Compile Include="Models\Recipe.cs" />
+    <Compile Include="Models\RecipeInputModel.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
