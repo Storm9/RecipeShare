@@ -158,6 +158,25 @@ namespace RecipeShare.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Recipe recipe = db.Recipes.Find(id);
+
+            if (recipe.ParentID == 0 && recipe.ChildRecipes.Count > 0)
+            {
+                recipe.ChildRecipes = (from child in db.Recipes
+                                       where child.ParentID == recipe.RecipeID
+                                       select child).ToList();
+
+                Recipe newParent = (Recipe)recipe.ChildRecipes.OrderByDescending(child => child.Rating).First();
+
+                foreach (var child in recipe.ChildRecipes)
+                {
+                    Recipe r = db.Recipes.Find(child.RecipeID);
+                    r.ParentID = newParent.RecipeID;
+                }
+
+                Recipe parentRecipe = db.Recipes.Find(newParent.RecipeID);
+                parentRecipe.ParentID = 0;
+            }
+
             db.Recipes.Remove(recipe);
             db.SaveChanges();
             return RedirectToAction("Index");
