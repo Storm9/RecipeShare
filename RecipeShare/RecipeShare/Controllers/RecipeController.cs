@@ -110,7 +110,10 @@ namespace RecipeShare.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Recipe recipe = db.Recipes.Find(id);
+            RecipeInputModel recipe = new RecipeInputModel();
+            recipe.populateFromRecipe(db.Recipes.Find(id));
+            ViewData["MeasureNames"] = (from measure in db.Measures select measure).ToList();
+            ViewData["IngredientNames"] = (from ingredient in db.IngredientNames select ingredient).ToList();
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -123,15 +126,31 @@ namespace RecipeShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Recipe recipe)
+        public ActionResult Edit(RecipeInputModel recipeInput)
         {
             if (ModelState.IsValid)
             {
+                Recipe recipe = recipeInput.toRecipe();
                 db.Entry(recipe).State = EntityState.Modified;
+                foreach (Ingredient ingredient in recipeInput.OldIngredients)
+                {
+                    if (ingredient.MeasureID == 0)
+                    {
+                        ingredient.MeasureID = null;
+                    }
+                    db.Entry(ingredient).State = EntityState.Modified;
+                }
+                if (recipeInput.NewIngredients != null)
+                {
+                    foreach (Ingredient ingredient in recipeInput.NewIngredients)
+                    {
+                        db.Ingredients.Add(ingredient);
+                    }
+                }
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = recipe.RecipeID });
             }
-            return View(recipe);
+            return View(recipeInput);
         }
 
         //

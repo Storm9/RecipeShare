@@ -1,7 +1,14 @@
-﻿@model RecipeShare.Models.Recipe
+﻿@model RecipeShare.Models.RecipeInputModel
 
 @{
     ViewBag.Title = "Editing " + Model.Name;
+    List<RecipeShare.Models.Measure> measureNames = (List<RecipeShare.Models.Measure>)ViewData["MeasureNames"];
+    List<RecipeShare.Models.IngredientName> ingredientNames = (List<RecipeShare.Models.IngredientName>)ViewData["IngredientNames"];
+
+    measureNames.Insert(0, new RecipeShare.Models.Measure());
+    ingredientNames.Insert(0, new RecipeShare.Models.IngredientName());
+    
+    RecipeShare.Models.Ingredient emptyIngredient = new RecipeShare.Models.Ingredient();
 }
 
 @using (Html.BeginForm())
@@ -9,7 +16,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset data-recipeid="@Model.RecipeID">
+    <fieldset>
         <legend>Recipe</legend>
 
         @Html.HiddenFor(model => model.RecipeID)
@@ -24,18 +31,39 @@
             @Html.EditorFor(model => model.Name)
             @Html.ValidationMessageFor(model => model.Name)
         </div>
-        <div id="ingredientsList">
-            @if (Model.Ingredients != null)
+        <fieldset id="ingredientsList">
+            <legend>Ingredients</legend>
+            @for (int index = 0; index < Model.OldIngredients.Count(); index++)
             {
-                foreach (var ingredient in Model.Ingredients)
-                {
-                    <div class="ingredient-editor" data-ingredient="@ingredient.IngredientID">
-                    </div>
-                }
-            }
-            <button id="addIngredient">Add Ingredient...</button>
-        </div>
+                var ingredient = Model.OldIngredients.ElementAt(index);
+                <div class="ingredient-editor">
 
+                    @Html.Hidden("OldIngredients[" + index + "].IngredientID", ingredient.IngredientID)
+                    @Html.Hidden("OldIngredients[" + index + "].RecipeID", Model.RecipeID)
+
+                    <span class="editor-field">
+                        @Html.TextBox("OldIngredients[" + index + "].Quantity", ingredient.Quantity)
+                        @Html.ValidationMessageFor(model => ingredient.Quantity)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.DropDownList("OldIngredients[" + index + "].MeasureID", new SelectList(measureNames, "MeasureID", "Name", ingredient.MeasureID))
+                        @Html.ValidationMessageFor(model => ingredient.MeasureID)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.DropDownList("OldIngredients[" + index + "].IngredientNameID", new SelectList(ingredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID))
+                        @Html.ValidationMessageFor(model => ingredient.IngredientNameID)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.TextBox("OldIngredients[" + index + "].Description", ingredient.Description)
+                        @Html.ValidationMessageFor(model => ingredient.Description)
+                    </span>
+                </div>
+            }
+        </fieldset>
+        <button id="addIngredient">Add Ingredient...</button>
         <div class="editor-label">
             @Html.LabelFor(model => model.Instructions)
         </div>
@@ -58,4 +86,30 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/edit-recipe.js")
+
+    <script type="text/template" id="newIngredientTemplate">
+        <div class="new-ingredient">
+            @Html.Hidden("NewIngredients[{0}].RecipeID", Model.RecipeID)
+
+            <span class="editor-field">
+                @Html.Editor("NewIngredients[{0}].Quantity")
+                @Html.ValidationMessage("Quantity", emptyIngredient)
+            </span>
+
+            <span class="editor-field">
+                @Html.DropDownList("NewIngredients[{0}].MeasureID", new SelectList(measureNames, "MeasureID", "Name"))
+                @Html.ValidationMessage("MeasureID", emptyIngredient)
+            </span>
+
+            <span class="editor-field">
+                @Html.DropDownList("NewIngredients[{0}].IngredientNameID", new SelectList(ingredientNames, "IngredientNameID", "Name"))
+                @Html.ValidationMessage("IngredientNameID", emptyIngredient)
+            </span>
+
+            <span class="editor-field">
+                @Html.Editor("NewIngredients[{0}].Description")
+                @Html.ValidationMessage("Description", emptyIngredient)
+            </span>
+        </div>
+    </script>
 }

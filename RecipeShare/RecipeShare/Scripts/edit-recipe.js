@@ -1,62 +1,20 @@
-﻿function extractFromForm(elements) {
-    return $.map(elements, function (input) {
-        var retval = {};
-        retval[$(input).attr('name')] = $(input).val();
-        return retval;
-    }).reduce(function (previousValue, currentValue, index, array) {
-        return $.extend(previousValue, currentValue);
+﻿String.prototype.format = function () {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function (match, number) {
+        return typeof args[number] != 'undefined'
+          ? args[number]
+          : match
+        ;
     });
-}
-
-function ingredientFields(editor) {
-    return $(editor).find('input').add($(editor).find('select'));
-}
-
-function replacePage(data) {
-    var newDoc = document.open("text/html", "replace");
-    newDoc.write(data);
-    newDoc.close();
-}
-
-function createIngredients() {
-    $('.new-ingredient').each(function () {
-        $.post('/Ingredient/Create/',
-            extractFromForm(ingredientFields(this)));
-    });
-}
-
-function submitChanges(recipeID) {
-
-    // submit changes to recipe
-    $.post('/Recipe/Edit/' + recipeID,
-        extractFromForm($('.main-content input:not(#ingredientsList *)').add('#Instructions')),
-        replacePage, "html");
-
-    // sumbint changes to ingredients
-    $('.ingredient-editor').each(function () {
-        $.post('/Ingredient/Edit/' + $(this).data('ingredient'),
-            extractFromForm(ingredientFields(this)));
-    });
-
-    createIngredients();
-}
+};
 
 jQuery(document).ready(function () {
-    var recipeID = $('.main-content form > fieldset').data("recipeid");
 
-    $('.ingredient-editor').each(function () {
-        $(this).load('/Ingredient/Edit/' + $(this).data('ingredient'));
-    });
+    var numNewIngredients = 0;
 
     $('#addIngredient').click(function (event) {
         event.preventDefault();
-        $.get('/Ingredient/Create/' + recipeID, function (data) {
-            $('#ingredientsList').append(data);
-        });
-    });
-
-    $('#saveChanges').click(function (event) {
-        event.preventDefault();
-        submitChanges(recipeID);
+        var template = $('#newIngredientTemplate').html();
+        $('#ingredientsList').append(template.format(numNewIngredients++));
     });
 });
