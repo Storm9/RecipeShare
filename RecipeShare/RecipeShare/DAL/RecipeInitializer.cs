@@ -15,7 +15,10 @@ namespace RecipeShare.DAL
             {
                 new Recipe {ParentID = 0, Rating = 4, Votes = 1, Name = "Omelet", Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices."},
                 new Recipe {ParentID = 0, Rating = 1, Votes = 1, Name = "PB&J Sandwich", Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
-                new Recipe {ParentID = 2, Rating = 3, Votes = 1, Name = "PB & Nutella Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
+                new Recipe {ParentID = 2, Rating = 3, Votes = 10, Name = "PB & Nutella Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
+                new Recipe {ParentID = 2, Rating = 5, Votes = 20, Name = "PB & Jam Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
+                new Recipe {ParentID = 2, Rating = 2, Votes = 1, Name = "PB Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"},
+                new Recipe {ParentID = 2, Rating = 4, Votes = 15, Name = "PB & Chocolate Sandwich", Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"}
             };
             recipes.ForEach(recipe => context.Recipes.Add(recipe));
             context.SaveChanges();
@@ -49,7 +52,9 @@ namespace RecipeShare.DAL
                 new IngredientName {Name = "peanut butter"},
                 new IngredientName {Name = "jelly"},
                 new IngredientName {Name = "bread"},
-                new IngredientName {Name = "nutella"}
+                new IngredientName {Name = "nutella"},
+                new IngredientName {Name = "jam"},
+                new IngredientName {Name = "chocolate"}
             };
             ingredientNames.ForEach(ingredientName => context.IngredientNames.Add(ingredientName));
             context.SaveChanges();
@@ -68,6 +73,14 @@ namespace RecipeShare.DAL
                 new Ingredient {RecipeID = 3, Quantity = 2, MeasureID = 11, IngredientNameID = 10},
                 new Ingredient {RecipeID = 3, IngredientNameID = 8, Description = "creamy"},
                 new Ingredient {RecipeID = 3, IngredientNameID = 11},
+                new Ingredient {RecipeID = 4, Quantity = 2, MeasureID = 11, IngredientNameID = 10},
+                new Ingredient {RecipeID = 4, IngredientNameID = 8},
+                new Ingredient {RecipeID = 4, IngredientNameID = 12},
+                new Ingredient {RecipeID = 5, Quantity = 2, MeasureID = 11, IngredientNameID = 10},
+                new Ingredient {RecipeID = 5, IngredientNameID = 8, Description = "chunky"},
+                new Ingredient {RecipeID = 6, Quantity = 2, MeasureID = 11, IngredientNameID = 10},
+                new Ingredient {RecipeID = 6, IngredientNameID = 8},
+                new Ingredient {RecipeID = 6, IngredientNameID = 13}
             };
             ingredients.ForEach(ingredient => context.Ingredients.Add(ingredient));
             context.SaveChanges();
@@ -79,7 +92,10 @@ namespace RecipeShare.DAL
                 new Review {RecipeID = 1, Name = "Anonymous", Entry = "Omelets suck but you don't know who said this so you can't do anything about it!"},
                 new Review {RecipeID = 2, Name = "Ben", Entry = "Can't go wrong with this one."},
                 new Review {RecipeID = 2, Name = "PB&JLuvr13", Entry = "OMG OMG OMG This is all I eat!!!"},
-                new Review {RecipeID = 3, Name = "PB&JLuvr13", Entry = "This is outrageous! PB&J4Lyfe! Get this nutella crap outta here! 0 stars!"}
+                new Review {RecipeID = 3, Name = "PB&JLuvr13", Entry = "This is outrageous! PB&J4Lyfe! Get this nutella crap outta here! 0 stars!"},
+                new Review {RecipeID = 4, Name = "PB&JLuvr13", Entry = "Jam instead of jelly? Who are you??"},
+                new Review {RecipeID = 5, Name = "PB&JLuvr13", Entry = "-_- seriously?"},
+                new Review {RecipeID = 6, Name = "PB&JLuvr13", Entry = "Ok now this is just ridiculous!!"}
             };
             reviews.ForEach(review => context.Reviews.Add(review));
             context.SaveChanges();
