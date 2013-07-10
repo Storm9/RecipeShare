@@ -52,10 +52,7 @@ namespace RecipeShare.Controllers
         public ActionResult Rating(int recipeId, int rating)
         {
             Recipe recipe = db.Recipes.Find(recipeId);
-            int tempRating = recipe.Rating;
-            double newRating = (recipe.Rating * recipe.Votes + rating) / (double)(recipe.Votes + 1);
-            recipe.Rating = (int)Math.Round(newRating);
-            //System.Diagnostics.Debug.WriteLine("(" + tempRating + " * " + recipe.Votes + " + " + rating + ") / " + (recipe.Votes + 1) + " = " + recipe.Rating + " : " + newRating);
+            recipe.Rating = (recipe.Rating * recipe.Votes + rating) / (double)(recipe.Votes + 1);
             recipe.Votes++;
 
             if (ModelState.IsValid)
@@ -158,23 +155,24 @@ namespace RecipeShare.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Recipe recipe = db.Recipes.Find(id);
+            recipe.ChildRecipes = (from child in db.Recipes
+                                   where child.ParentID == recipe.RecipeID
+                                   select child).ToList();
 
             if (recipe.ParentID == 0 && recipe.ChildRecipes.Count > 0)
             {
-                recipe.ChildRecipes = (from child in db.Recipes
-                                       where child.ParentID == recipe.RecipeID
-                                       select child).ToList();
-
                 Recipe newParent = (Recipe)recipe.ChildRecipes.OrderByDescending(child => child.Rating).First();
 
                 foreach (var child in recipe.ChildRecipes)
                 {
                     Recipe r = db.Recipes.Find(child.RecipeID);
                     r.ParentID = newParent.RecipeID;
+                    db.Entry(r).State = EntityState.Modified;
                 }
 
                 Recipe parentRecipe = db.Recipes.Find(newParent.RecipeID);
                 parentRecipe.ParentID = 0;
+                db.Entry(parentRecipe).State = EntityState.Modified;
             }
 
             db.Recipes.Remove(recipe);
