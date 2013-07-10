@@ -96,16 +96,44 @@ namespace RecipeShare.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Recipe recipe)
+        public ActionResult Create(RecipeInputModel recipeInput)
         {
             if (ModelState.IsValid)
             {
+                recipeInput.ParentID = recipeInput.RecipeID;
+                Recipe recipe = recipeInput.toRecipe();
                 db.Recipes.Add(recipe);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                int recipeID = db.Entry<Recipe>(recipe).Entity.RecipeID;
+                if (recipeInput.OldIngredients != null)
+                {
+                    foreach (Ingredient ingredient in recipeInput.OldIngredients)
+                    {
+                        if (ingredient.MeasureID == 0)
+                        {
+                            ingredient.MeasureID = null;
+                        }
+                        ingredient.RecipeID = recipeID;
+                        db.Ingredients.Add(ingredient);
+                    }
+                }
+                if (recipeInput.NewIngredients != null)
+                {
+                    foreach (Ingredient ingredient in recipeInput.NewIngredients)
+                    {
+                        if (ingredient.MeasureID == 0)
+                        {
+                            ingredient.MeasureID = null;
+                        }
+                        ingredient.RecipeID = recipeID;
+                        db.Ingredients.Add(ingredient);
+                    }
+                }
+                db.SaveChanges();
+                return RedirectToAction("Details", new { id = recipeID });
             }
 
-            return View(recipe);
+            return View(recipeInput);
         }
 
         //
@@ -147,6 +175,10 @@ namespace RecipeShare.Controllers
                 {
                     foreach (Ingredient ingredient in recipeInput.NewIngredients)
                     {
+                        if (ingredient.MeasureID == 0)
+                        {
+                            ingredient.MeasureID = null;
+                        }
                         db.Ingredients.Add(ingredient);
                     }
                 }
