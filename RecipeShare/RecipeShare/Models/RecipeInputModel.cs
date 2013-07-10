@@ -26,7 +26,30 @@ namespace RecipeShare.Models
         [MaxLength(1000, ErrorMessage = "Instructions must be 1000 characters or less.")]
         public string Instructions { get; set; }
 
-        public ICollection<Ingredient> OldIngredients { get; set; }
-        public ICollection<Ingredient> NewIngredients { get; set; }
+        public IEnumerable<Ingredient> OldIngredients { get; set; }
+        public IEnumerable<Ingredient> NewIngredients { get; set; }
+
+        public void populateFromRecipe(Recipe recipe)
+        {
+            RecipeID = recipe.RecipeID;
+            ParentID = recipe.ParentID;
+            Rating = recipe.Rating;
+            Votes = recipe.Votes;
+            Name = recipe.Name;
+            Instructions = recipe.Instructions;
+            OldIngredients = recipe.Ingredients.AsEnumerable();
+        }
+
+        public Recipe toRecipe()
+        {
+            Recipe retval = new Recipe();
+            retval.RecipeID = RecipeID;
+            retval.ParentID = ParentID;
+            retval.Rating = Rating;
+            retval.Votes = Votes;
+            retval.Name = Name;
+            retval.Instructions = Instructions;
+            return retval;
+        }
     }
 }
