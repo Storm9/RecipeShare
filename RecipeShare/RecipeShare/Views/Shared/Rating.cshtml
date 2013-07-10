@@ -1,5 +1,5 @@
 ﻿@model RecipeShare.Models.Recipe
-<ul class="@("rating r" + Model.Rating)">
+<ul class="@("rating r" + (int)Math.Round(Model.Rating))">
     <li class="r1">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 1 }, null)</li>
     <li class="r2">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 2 }, null)</li>
     <li class="r3">@Html.ActionLink(" ", "Rating", "Recipe", new { recipeId = Model.RecipeID, rating = 3 }, null)</li>

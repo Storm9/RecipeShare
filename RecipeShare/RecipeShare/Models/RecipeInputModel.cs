@@ -13,7 +13,7 @@ namespace RecipeShare.Models
         
         public int RecipeID { get; set; }
         public int ParentID { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         public int Votes { get; set; }
 
         [Display(Name = "Enter recipe name.")]
