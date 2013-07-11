@@ -76,7 +76,7 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void RecipeInitializerConstructorTest()
         {
-            RecipeInitializer target = new RecipeInitializer();
+            //RecipeInitializer target = new RecipeInitializer();
             Assert.Inconclusive("TODO: Implement code to verify target");
         }
     }
