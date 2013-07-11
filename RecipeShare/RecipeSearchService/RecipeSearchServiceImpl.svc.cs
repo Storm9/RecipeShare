@@ -33,7 +33,7 @@ namespace RecipeSearchService
         }
 
         private SqlConnection GetSqlConnection()
-        {as if 
+        {
             if (ConfigurationManager.ConnectionStrings.Count > 0 && ConfigurationManager.ConnectionStrings["RecipeContext"] != null)
             {
                 return new SqlConnection(ConfigurationManager.ConnectionStrings["RecipeContext"].ConnectionString);
