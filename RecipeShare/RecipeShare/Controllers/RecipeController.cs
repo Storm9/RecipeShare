@@ -79,6 +79,30 @@ namespace RecipeShare.Controllers
             }
             return View(recipe);
         }
+   
+        private void UpdateIngredients(IEnumerable<Ingredient> ingredients, int recipeID = 0)
+        {
+            if (ingredients != null)
+            {
+                foreach (Ingredient ingredient in ingredients)
+                {
+                    if (ingredient.MeasureID == 0)
+                    {
+                        ingredient.MeasureID = null;
+                    }
+                    if (recipeID == 0)
+                    {
+                         db.Entry(ingredient).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        ingredient.RecipeID = recipeID;
+                        db.Ingredients.Add(ingredient);
+                    }
+                }
+            }
+        }
+
 
         //
         // GET: /Recipe/Create
@@ -101,31 +125,10 @@ namespace RecipeShare.Controllers
                 Recipe recipe = recipeInput.toRecipe();
                 db.Recipes.Add(recipe);
                 db.SaveChanges();
+
                 int recipeID = db.Entry<Recipe>(recipe).Entity.RecipeID;
-                if (recipeInput.OldIngredients != null)
-                {
-                    foreach (Ingredient ingredient in recipeInput.OldIngredients)
-                    {
-                        if (ingredient.MeasureID == 0)
-                        {
-                            ingredient.MeasureID = null;
-                        }
-                        ingredient.RecipeID = recipeID;
-                        db.Ingredients.Add(ingredient);
-                    }
-                }
-                if (recipeInput.NewIngredients != null)
-                {
-                    foreach (Ingredient ingredient in recipeInput.NewIngredients)
-                    {
-                        if (ingredient.MeasureID == 0)
-                        {
-                            ingredient.MeasureID = null;
-                        }
-                        ingredient.RecipeID = recipeID;
-                        db.Ingredients.Add(ingredient);
-                    }
-                }
+                UpdateIngredients(recipeInput.NewIngredients, recipeID);
+                UpdateIngredients(recipeInput.OldIngredients, recipeID);
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = recipeID });
             }
@@ -160,25 +163,8 @@ namespace RecipeShare.Controllers
             {
                 Recipe recipe = recipeInput.toRecipe();
                 db.Entry(recipe).State = EntityState.Modified;
-                foreach (Ingredient ingredient in recipeInput.OldIngredients)
-                {
-                    if (ingredient.MeasureID == 0)
-                    {
-                        ingredient.MeasureID = null;
-                    }
-                    db.Entry(ingredient).State = EntityState.Modified;
-                }
-                if (recipeInput.NewIngredients != null)
-                {
-                    foreach (Ingredient ingredient in recipeInput.NewIngredients)
-                    {
-                        if (ingredient.MeasureID == 0)
-                        {
-                            ingredient.MeasureID = null;
-                        }
-                        db.Ingredients.Add(ingredient);
-                    }
-                }
+                UpdateIngredients(recipeInput.OldIngredients);
+                UpdateIngredients(recipeInput.NewIngredients, recipeInput.RecipeID);
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = recipe.RecipeID });
             }
