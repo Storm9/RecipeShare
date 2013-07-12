@@ -28,10 +28,10 @@ namespace RecipeShare
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            //Database.SetInitializer<RecipeContext>(new RecipeInitializer());
+            Database.SetInitializer<RecipeContext>(new RecipeInitializer());
             //Database.SetInitializer<RecipeContext>(new DropCreateDatabaseAlways<RecipeContext>());
             //Database.SetInitializer<RecipeContext>(new DontDropDbJustCreateTablesIfModelChanged<RecipeContext>());
-            Database.SetInitializer<RecipeContext>(new CreateDatabaseIfNotExists<RecipeContext>());
+            //Database.SetInitializer<RecipeContext>(new CreateDatabaseIfNotExists<RecipeContext>());
         }
     }
 }
