@@ -29,7 +29,9 @@ namespace RecipeShare
             AuthConfig.RegisterAuth();
 
             //Database.SetInitializer<RecipeContext>(new RecipeInitializer());
-            Database.SetInitializer(new DontDropDbJustCreateTablesIfModelChanged<RecipeContext>());
+            //Database.SetInitializer<RecipeContext>(new DropCreateDatabaseAlways<RecipeContext>());
+            //Database.SetInitializer<RecipeContext>(new DontDropDbJustCreateTablesIfModelChanged<RecipeContext>());
+            Database.SetInitializer<RecipeContext>(new CreateDatabaseIfNotExists<RecipeContext>());
         }
     }
 }
