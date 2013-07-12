@@ -8,7 +8,7 @@ using System.Web;
 
 namespace RecipeShare.DAL
 {
-    public class RecipeInitializer : DropCreateDatabaseIfModelChanges<RecipeContext>
+    public class RecipeInitializer : CreateDatabaseIfNotExists<RecipeContext>
     {
         protected override void Seed(RecipeContext context)
         {
