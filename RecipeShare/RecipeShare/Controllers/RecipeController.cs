@@ -7,23 +7,34 @@ using System.Web;
 using System.Web.Mvc;
 using RecipeShare.Models;
 using RecipeShare.DAL;
+using Ninject;
 
 namespace RecipeShare.Controllers
 {
     public class RecipeController : Controller
     {
-        private RecipeContext db = new RecipeContext();
+        private IRecipeUnitOfWork unitOfWork;
+
+        [Inject]
+        public RecipeController(IRecipeUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
 
         public JsonResult GetRecipes(string term)
         {
-            var result = (from name in db.Recipes where name.Name.ToLower().Contains(term.ToLower()) select new { name.Name }).Distinct();
-            
-             return Json(result, JsonRequestBehavior.AllowGet);
+            var result = (from recipe in unitOfWork.RecipeRepo.Get()
+                          where recipe.Name.ToLower().Contains(term.ToLower())
+                          select new { recipe.Name }).Distinct();
+        
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetIngredients(string term)
         {
-            var result = (from name in db.IngredientNames where name.Name.ToLower().Contains(term.ToLower()) select new { name.Name }).Distinct();
+            var result = (from ingredient in unitOfWork.IngredientNameRepo.Get()
+                          where ingredient.Name.ToLower().Contains(term.ToLower())
+                          select new { ingredient.Name }).Distinct();
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -33,7 +44,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Index(string recipeName, string ingredientName)
         {
-            var recipes = from recipe in db.Recipes select recipe;
+            var recipes = from recipe in unitOfWork.RecipeRepo.Get() select recipe;
 
             if (!String.IsNullOrEmpty(recipeName))
             {
@@ -42,7 +53,10 @@ namespace RecipeShare.Controllers
 
             if (!String.IsNullOrEmpty(ingredientName))
             {
-                var recipeIds = from name in db.IngredientNames where name.Name.Contains(ingredientName) join ingredient in db.Ingredients on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
+                var recipeIds = from name in unitOfWork.IngredientNameRepo.Get()
+                                where name.Name.Contains(ingredientName) 
+                                join ingredient in unitOfWork.IngredientRepo.Get()
+                                on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
                 recipes = (from recipe in recipes join id in recipeIds on recipe.RecipeID equals id select recipe).Distinct();
             }
 
@@ -51,14 +65,14 @@ namespace RecipeShare.Controllers
 
         public ActionResult Rating(int recipeId, int rating)
         {
-            Recipe recipe = db.Recipes.Find(recipeId);
+            Recipe recipe = unitOfWork.RecipeRepo.FindById(recipeId);
             recipe.Rating = (recipe.Rating * recipe.Votes + rating) / (double)(recipe.Votes + 1);
             recipe.Votes++;
 
             if (ModelState.IsValid)
             {
-                db.Entry(recipe).State = EntityState.Modified;
-                db.SaveChanges();
+                unitOfWork.RecipeRepo.Update(recipe);
+                unitOfWork.Save();
             }
 
             return RedirectToAction("Details", new { id = recipeId });
@@ -69,8 +83,8 @@ namespace RecipeShare.Controllers
 
         public ActionResult Details(int id = 0)
         {
-            Recipe recipe = db.Recipes.Find(id);
-            recipe.ChildRecipes = (from child in db.Recipes
+            Recipe recipe = unitOfWork.RecipeRepo.FindById(id);
+            recipe.ChildRecipes = (from child in unitOfWork.RecipeRepo.Get()
                                    where child.ParentID == recipe.RecipeID
                                    select child).ToList();
             if (recipe == null)
@@ -92,12 +106,12 @@ namespace RecipeShare.Controllers
                     }
                     if (recipeID == 0)
                     {
-                         db.Entry(ingredient).State = EntityState.Modified;
+                        unitOfWork.IngredientRepo.Update(ingredient);
                     }
                     else
                     {
                         ingredient.RecipeID = recipeID;
-                        db.Ingredients.Add(ingredient);
+                        unitOfWork.IngredientRepo.Insert(ingredient);
                     }
                 }
             }
@@ -123,13 +137,13 @@ namespace RecipeShare.Controllers
             {
                 recipeInput.ParentID = recipeInput.RecipeID;
                 Recipe recipe = recipeInput.toRecipe();
-                db.Recipes.Add(recipe);
-                db.SaveChanges();
+                unitOfWork.RecipeRepo.Insert(recipe);
+                unitOfWork.Save();
 
-                int recipeID = db.Entry<Recipe>(recipe).Entity.RecipeID;
+                int recipeID = unitOfWork.RecipeRepo.Entry(recipe).RecipeID;
                 UpdateIngredients(recipeInput.NewIngredients, recipeID);
                 UpdateIngredients(recipeInput.OldIngredients, recipeID);
-                db.SaveChanges();
+                unitOfWork.Save();
                 return RedirectToAction("Details", new { id = recipeID });
             }
 
@@ -142,9 +156,9 @@ namespace RecipeShare.Controllers
         public ActionResult Edit(int id = 0)
         {
             RecipeInputModel recipe = new RecipeInputModel();
-            recipe.populateFromRecipe(db.Recipes.Find(id));
-            ViewData["MeasureNames"] = (from measure in db.Measures select measure).ToList();
-            ViewData["IngredientNames"] = (from ingredient in db.IngredientNames select ingredient).ToList();
+            recipe.populateFromRecipe(unitOfWork.RecipeRepo.FindById(id));
+            ViewData["MeasureNames"] = (from measure in unitOfWork.MeasureRepo.Get() select measure).ToList();
+            ViewData["IngredientNames"] = (from ingredient in unitOfWork.IngredientNameRepo.Get() select ingredient).ToList();
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -162,10 +176,10 @@ namespace RecipeShare.Controllers
             if (ModelState.IsValid)
             {
                 Recipe recipe = recipeInput.toRecipe();
-                db.Entry(recipe).State = EntityState.Modified;
+                unitOfWork.RecipeRepo.Update(recipe);
                 UpdateIngredients(recipeInput.OldIngredients);
                 UpdateIngredients(recipeInput.NewIngredients, recipeInput.RecipeID);
-                db.SaveChanges();
+                unitOfWork.Save();
                 return RedirectToAction("Details", new { id = recipe.RecipeID });
             }
             return View(recipeInput);
@@ -176,7 +190,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Recipe recipe = db.Recipes.Find(id);
+            Recipe recipe = unitOfWork.RecipeRepo.FindById(id);
             if (recipe == null)
             {
                 return HttpNotFound();
@@ -191,8 +205,8 @@ namespace RecipeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Recipe recipe = db.Recipes.Find(id);
-            recipe.ChildRecipes = (from child in db.Recipes
+            Recipe recipe = unitOfWork.RecipeRepo.FindById(id);
+            recipe.ChildRecipes = (from child in unitOfWork.RecipeRepo.Get()
                                    where child.ParentID == recipe.RecipeID
                                    select child).ToList();
 
@@ -202,24 +216,24 @@ namespace RecipeShare.Controllers
 
                 foreach (var child in recipe.ChildRecipes)
                 {
-                    Recipe r = db.Recipes.Find(child.RecipeID);
+                    Recipe r = unitOfWork.RecipeRepo.FindById(child.RecipeID);
                     r.ParentID = newParent.RecipeID;
-                    db.Entry(r).State = EntityState.Modified;
+                    unitOfWork.RecipeRepo.Update(r);
                 }
 
-                Recipe parentRecipe = db.Recipes.Find(newParent.RecipeID);
+                Recipe parentRecipe = unitOfWork.RecipeRepo.FindById(newParent.RecipeID);
                 parentRecipe.ParentID = 0;
-                db.Entry(parentRecipe).State = EntityState.Modified;
+                unitOfWork.RecipeRepo.Update(parentRecipe);
             }
 
-            db.Recipes.Remove(recipe);
-            db.SaveChanges();
+            unitOfWork.RecipeRepo.Delete(recipe);
+            unitOfWork.Save();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
     }

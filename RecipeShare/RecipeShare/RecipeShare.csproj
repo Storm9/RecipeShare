@@ -46,6 +46,12 @@
       <HintPath>..\packages\AjaxControlToolkit.7.0607\lib\45\SanitizerProviders\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="SanitizerProviders">
       <HintPath>..\packages\AjaxControlToolkit.7.0607\lib\45\SanitizerProviders\SanitizerProviders.dll</HintPath>
     </Reference>
@@ -163,6 +169,9 @@
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.1.0\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="xunit">
+      <HintPath>..\packages\xunit.1.9.1\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -175,12 +184,16 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IGenericRepository.cs" />
+    <Compile Include="DAL\IRecipeUnitOfWork.cs" />
     <Compile Include="DAL\RecipeContext.cs" />
     <Compile Include="DAL\RecipeInitializer.cs" />
+    <Compile Include="DAL\RecipeUnitOfWork.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Injection\DefaultModule.cs" />
+    <Compile Include="Injection\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\IngredientName.cs" />

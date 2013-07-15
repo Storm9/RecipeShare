@@ -9,6 +9,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Ninject;
+using RecipeShare.Injection;
 
 namespace RecipeShare
 {
@@ -19,6 +21,9 @@ namespace RecipeShare
     {
         protected void Application_Start()
         {
+            IKernel kernel = new StandardKernel(new DefaultModule());
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(kernel));
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

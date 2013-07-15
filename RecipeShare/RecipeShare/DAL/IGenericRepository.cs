@@ -7,12 +7,9 @@ using System.Threading.Tasks;
 
 namespace RecipeShare.DAL
 {
-    interface IGenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy,
-            string includeProperties);
+        IEnumerable<TEntity> Get();
         TEntity FindById(int id);
         TEntity Entry(TEntity te);
         void Update(TEntity te);
