@@ -195,9 +195,13 @@
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IGenericRepository.cs" />
     <Compile Include="DAL\IRecipeUnitOfWork.cs" />
+    <Compile Include="DAL\IReviewUnitOfWork.cs" />
+    <Compile Include="DAL\IUnitOfWork.cs" />
     <Compile Include="DAL\RecipeContext.cs" />
     <Compile Include="DAL\RecipeInitializer.cs" />
     <Compile Include="DAL\RecipeUnitOfWork.cs" />
+    <Compile Include="DAL\ReviewUnitOfWork.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

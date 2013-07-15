@@ -6,9 +6,8 @@ using RecipeShare.Models;
 
 namespace RecipeShare.DAL
 {
-    public class RecipeUnitOfWork : IRecipeUnitOfWork
+    public class RecipeUnitOfWork : UnitOfWork, IRecipeUnitOfWork
     {
-        private RecipeContext context = new RecipeContext();
         private GenericRepository<Recipe> recipeRepo;
         private GenericRepository<Ingredient> ingredientRepo;
         private GenericRepository<IngredientName> ingredientNameRepo;
@@ -61,28 +60,6 @@ namespace RecipeShare.DAL
                 return this.measureRepo;
             }
         }
-
-        public void Save()
-        {
-            context.SaveChanges();
-        }
-
-        private bool disposed = false;
-
-        public virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed && disposing)
-            {
-                context.Dispose();
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
+        
     }
 }
