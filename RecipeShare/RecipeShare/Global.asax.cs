@@ -1,4 +1,5 @@
-﻿using RecipeShare.DAL;
+﻿using Devtalk.EF.CodeFirst;
+using RecipeShare.DAL;
 using RecipeShare.Models;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,9 @@ namespace RecipeShare
             AuthConfig.RegisterAuth();
 
             Database.SetInitializer<RecipeContext>(new RecipeInitializer());
+            //Database.SetInitializer<RecipeContext>(new DropCreateDatabaseAlways<RecipeContext>());
+            //Database.SetInitializer<RecipeContext>(new DontDropDbJustCreateTablesIfModelChanged<RecipeContext>());
+            //Database.SetInitializer<RecipeContext>(new CreateDatabaseIfNotExists<RecipeContext>());
         }
     }
 }

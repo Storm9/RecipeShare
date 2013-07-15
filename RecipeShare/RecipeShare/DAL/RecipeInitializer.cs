@@ -1,4 +1,5 @@
-﻿using RecipeShare.Models;
+﻿using Devtalk.EF.CodeFirst;
+using RecipeShare.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace RecipeShare.DAL
 {
-    public class RecipeInitializer : DropCreateDatabaseIfModelChanges<RecipeContext>
+    public class RecipeInitializer : CreateDatabaseIfNotExists<RecipeContext>
     {
         protected override void Seed(RecipeContext context)
         {
@@ -22,7 +23,7 @@ namespace RecipeShare.DAL
             };
             recipes.ForEach(recipe => context.Recipes.Add(recipe));
             context.SaveChanges();
-            
+
             var measures = new List<Measure>
             {
                 new Measure {Name = "cups"},
