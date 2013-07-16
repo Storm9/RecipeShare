@@ -48,7 +48,7 @@ namespace RecipeSearchService
             foreach (var ingredient in ingredients)
             {
                 ingredientNames.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(ingredient.IngredientNameID.ToString(), ingredient.Name));
-            }
+           } 
 
             return ingredientNames;
         }
