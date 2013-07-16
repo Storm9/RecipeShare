@@ -7,11 +7,15 @@ using RecipeShare.Models;
 
 namespace RecipeShare.DAL
 {
-    public interface IRecipeUnitOfWork : IUnitOfWork
+    public interface IRepoSet : IDisposable
     {
         IGenericRepository<Recipe> RecipeRepo { get; }
         IGenericRepository<Ingredient> IngredientRepo { get; }
         IGenericRepository<IngredientName> IngredientNameRepo { get; }
         IGenericRepository<Measure> MeasureRepo { get; }
+        IGenericRepository<Review> ReviewRepo { get; }
+
+        void Save();
+        void Dispose();
     }
 }

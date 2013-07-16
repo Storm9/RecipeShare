@@ -6,12 +6,15 @@ using RecipeShare.Models;
 
 namespace RecipeShare.DAL
 {
-    public class RecipeUnitOfWork : UnitOfWork, IRecipeUnitOfWork
+    public class RepoSet : IRepoSet
     {
         private GenericRepository<Recipe> recipeRepo;
         private GenericRepository<Ingredient> ingredientRepo;
         private GenericRepository<IngredientName> ingredientNameRepo;
         private GenericRepository<Measure> measureRepo;
+        private GenericRepository<Review> reviewRepo;
+
+        protected RecipeContext context = new RecipeContext();
 
         public IGenericRepository<Recipe> RecipeRepo
         {
@@ -59,6 +62,40 @@ namespace RecipeShare.DAL
                 }
                 return this.measureRepo;
             }
+        }
+
+        public IGenericRepository<Review> ReviewRepo
+        {
+            get
+            {
+                if (this.reviewRepo == null)
+                {
+                    this.reviewRepo = new GenericRepository<Review>(context);
+                }
+                return this.reviewRepo;
+            }
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed && disposing)
+            {
+                context.Dispose();
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
         
     }

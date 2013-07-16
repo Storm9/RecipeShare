@@ -7,16 +7,18 @@ using System.Web;
 using System.Web.Mvc;
 using RecipeShare.Models;
 using RecipeShare.DAL;
+using Ninject;
 
 namespace RecipeShare.Controllers
 {
     public class ReviewController : Controller
     {
-        private IReviewUnitOfWork unitOfWork;
+        private RepoSet repoSet;
 
-        public ReviewController(IReviewUnitOfWork unitOfWork)
+        [Inject]
+        public ReviewController(RepoSet repoSet)
         {
-            this.unitOfWork = unitOfWork;
+            this.repoSet = repoSet;
         }
 
         //
@@ -39,8 +41,8 @@ namespace RecipeShare.Controllers
             {
                 if (String.IsNullOrEmpty(review.Name))
                     review.Name = "Anonymous";
-                unitOfWork.ReviewRepo.Insert(review);
-                unitOfWork.Save();
+                repoSet.ReviewRepo.Insert(review);
+                repoSet.Save();
                 return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
 
@@ -52,7 +54,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Review review = unitOfWork.ReviewRepo.FindById(id);
+            Review review = repoSet.ReviewRepo.FindById(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -69,8 +71,8 @@ namespace RecipeShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                unitOfWork.ReviewRepo.Update(review);
-                unitOfWork.Save();
+                repoSet.ReviewRepo.Update(review);
+                repoSet.Save();
                 return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
             
@@ -82,7 +84,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Review review = unitOfWork.ReviewRepo.FindById(id);
+            Review review = repoSet.ReviewRepo.FindById(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -97,15 +99,15 @@ namespace RecipeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = unitOfWork.ReviewRepo.FindById(id);
-            unitOfWork.ReviewRepo.Delete(review);
-            unitOfWork.Save();
+            Review review = repoSet.ReviewRepo.FindById(id);
+            repoSet.ReviewRepo.Delete(review);
+            repoSet.Save();
             return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
         }
 
         protected override void Dispose(bool disposing)
         {
-            unitOfWork.Dispose();
+            repoSet.Dispose();
             base.Dispose(disposing);
         }
     }
