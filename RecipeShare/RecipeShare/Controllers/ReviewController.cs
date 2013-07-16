@@ -12,7 +12,12 @@ namespace RecipeShare.Controllers
 {
     public class ReviewController : Controller
     {
-        private RecipeContext db = new RecipeContext();
+        private IReviewUnitOfWork unitOfWork;
+
+        public ReviewController(IReviewUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
 
         //
         // GET: /Review/Create/5
@@ -34,8 +39,8 @@ namespace RecipeShare.Controllers
             {
                 if (String.IsNullOrEmpty(review.Name))
                     review.Name = "Anonymous";
-                db.Reviews.Add(review);
-                db.SaveChanges();
+                unitOfWork.ReviewRepo.Insert(review);
+                unitOfWork.Save();
                 return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
 
@@ -47,7 +52,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Edit(int id = 0)
         {
-            Review review = db.Reviews.Find(id);
+            Review review = unitOfWork.ReviewRepo.FindById(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -64,8 +69,8 @@ namespace RecipeShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(review).State = EntityState.Modified;
-                db.SaveChanges();
+                unitOfWork.ReviewRepo.Update(review);
+                unitOfWork.Save();
                 return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
             }
             
@@ -77,7 +82,7 @@ namespace RecipeShare.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Review review = db.Reviews.Find(id);
+            Review review = unitOfWork.ReviewRepo.FindById(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -92,15 +97,15 @@ namespace RecipeShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.Find(id);
-            db.Reviews.Remove(review);
-            db.SaveChanges();
+            Review review = unitOfWork.ReviewRepo.FindById(id);
+            unitOfWork.ReviewRepo.Delete(review);
+            unitOfWork.Save();
             return RedirectToAction("Details", "Recipe", new { id = review.RecipeID });
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            unitOfWork.Dispose();
             base.Dispose(disposing);
         }
     }
