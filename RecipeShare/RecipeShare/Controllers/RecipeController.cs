@@ -40,20 +40,18 @@ namespace RecipeShare.Controllers
 
         public JsonResult GetRecipes(string term)
         {
-            var result = (from recipe in unitOfWork.RecipeRepo.Get()
-                          where recipe.Name.ToLower().Contains(term.ToLower())
-                          select new { recipe.Name }).Distinct();
-        
-            return Json(result, JsonRequestBehavior.AllowGet);
+            RecipeSearchServiceReference.RecipeSearchServiceClient obj = new RecipeSearchServiceReference.RecipeSearchServiceClient();
+            var result = obj.GetRecipeNames(term);
+
+            return Json(result);
         }
 
         public JsonResult GetIngredients(string term)
         {
-            var result = (from ingredient in unitOfWork.IngredientNameRepo.Get()
-                          where ingredient.Name.ToLower().Contains(term.ToLower())
-                          select new { ingredient.Name }).Distinct();
+            RecipeSearchServiceReference.RecipeSearchServiceClient obj = new RecipeSearchServiceReference.RecipeSearchServiceClient();
+            var result = obj.GetIngredients(term);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         
         //

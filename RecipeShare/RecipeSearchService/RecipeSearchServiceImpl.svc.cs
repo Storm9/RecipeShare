@@ -11,7 +11,7 @@ using System.Data.Linq;
 
 namespace RecipeSearchService
 {
-    public class ReceipeSearchServiceImpl : IRecipeSearchService
+    public class RecipeSearchServiceImpl : IRecipeSearchService
     {
 
         public List<String> GetRecipeNames(string prefix)
@@ -28,7 +28,7 @@ namespace RecipeSearchService
             {
                 foreach (var recipe in recipes)
                 {
-                    names.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(recipe.RecipeID.ToString(), recipe.Name));
+                    names.Add(recipe.Name);
                 }
             }
 
@@ -47,7 +47,7 @@ namespace RecipeSearchService
 
             foreach (var ingredient in ingredients)
             {
-                ingredientNames.Add(AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(ingredient.IngredientNameID.ToString(), ingredient.Name));
+                ingredientNames.Add(ingredient.Name);
            } 
 
             return ingredientNames;

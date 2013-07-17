@@ -31,7 +31,7 @@
                     data: { term: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
+                            return { label: item, value: item };
                         }))
 
                     }
