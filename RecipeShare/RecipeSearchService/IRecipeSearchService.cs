@@ -13,5 +13,8 @@ namespace RecipeSearchService
     {
         [OperationContract]
         List<String> GetRecipeNames(string prefix);
+
+        [OperationContract]
+        List<String> GetIngredients(string prefix);
     }
-}
+} 
