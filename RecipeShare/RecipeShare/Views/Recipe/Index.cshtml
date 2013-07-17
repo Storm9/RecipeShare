@@ -9,11 +9,15 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
+    @Scripts.Render("~/Scripts/recipe_index.js")
 
 <script type="text/javascript">
     $(document).ready(function () {
         autoComplete("#recipeName", "/Recipe/GetRecipes");
         autoComplete("#ingredientName", "/Recipe/GetIngredients");
+
+
     });
 
     function autoComplete(id, path)
@@ -65,7 +69,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="item" data-recipeid="@item.RecipeID">
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
