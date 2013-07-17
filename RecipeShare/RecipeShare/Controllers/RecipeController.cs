@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using RecipeShare.Models;
 using RecipeShare.DAL;
 using Ninject;
+using CloudinaryDotNet.Actions;
 
 namespace RecipeShare.Controllers
 {
@@ -19,6 +20,22 @@ namespace RecipeShare.Controllers
         public RecipeController(IRecipeUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
+        }
+
+        public JsonResult GetImages(int id = 0)
+        {
+            CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hadwuldso", "748288728926438", "D3F_ieSV77X3IdUy8rWpBePYio8");
+            CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+            ListResourcesResult lrr = cloudinary.ListResourcesByTag(id.ToString(), null);
+            List<string> images = new List<string>();
+
+            foreach (var item in lrr.Resources)
+            {
+                images.Add(item.Uri.Segments[5]);
+            }
+
+
+            return Json(images, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetRecipes(string term)
