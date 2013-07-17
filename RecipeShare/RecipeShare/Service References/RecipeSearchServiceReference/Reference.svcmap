@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2ee84c5b-ed48-4427-b4b0-1152d7d2fc2b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:51369/RecipeSearchServiceImpl.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RecipeSearchServiceImpl.xsd" MetadataType="Schema" ID="7c458171-bef3-485f-b672-579dbf97b5a4" SourceId="1" SourceUrl="http://localhost:51369/RecipeSearchServiceImpl.svc?xsd=xsd0" />
+    <MetadataFile FileName="RecipeSearchServiceImpl.disco" MetadataType="Disco" ID="4da6263a-e239-4537-809c-b39ae7a7c654" SourceId="1" SourceUrl="http://localhost:51369/RecipeSearchServiceImpl.svc?disco" />
+    <MetadataFile FileName="RecipeSearchServiceImpl1.xsd" MetadataType="Schema" ID="110eea2f-2ee6-4568-b311-8b2037aaf805" SourceId="1" SourceUrl="http://localhost:51369/RecipeSearchServiceImpl.svc?xsd=xsd2" />
+    <MetadataFile FileName="RecipeSearchServiceImpl2.xsd" MetadataType="Schema" ID="7747e3d7-1e58-428d-82a4-dd210932b5ae" SourceId="1" SourceUrl="http://localhost:51369/RecipeSearchServiceImpl.svc?xsd=xsd1" />
+    <MetadataFile FileName="RecipeSearchServiceImpl.wsdl" MetadataType="Wsdl" ID="d7baf1aa-274d-43bc-8e66-b34425fd7f10" SourceId="1" SourceUrl="http://localhost:51369/RecipeSearchServiceImpl.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
