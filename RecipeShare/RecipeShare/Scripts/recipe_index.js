@@ -15,6 +15,9 @@ jQuery(document).ready(function () {
             success: function (data) { images = data; },
         });
 
-        $($.cloudinary.image(images[0], { width: 150, height: 100, crop: 'fill' }).prependTo($(this)));
+        if (images.length != 0)
+        {
+            $($.cloudinary.image(images[0], { width: 150, height: 100, crop: 'fill' }).prependTo($(this)));
+        }    
     });
 });
