@@ -7,7 +7,7 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")`
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/Scripts/jquery.cloudinary.js")
     @Scripts.Render("~/Scripts/recipe_index.js")
@@ -16,8 +16,6 @@
     $(document).ready(function () {
         autoComplete("#recipeName", "/Recipe/GetRecipes");
         autoComplete("#ingredientName", "/Recipe/GetIngredients");
-
-
     });
 
     function autoComplete(id, path)
@@ -38,7 +36,8 @@
                 })
             },
             messages: {
-                noResults: "", results: ""
+                noResults: "",
+                results: ""
             }
         });
     }

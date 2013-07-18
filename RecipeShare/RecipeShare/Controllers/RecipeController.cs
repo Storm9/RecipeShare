@@ -63,13 +63,13 @@ namespace RecipeShare.Controllers
 
             if (!String.IsNullOrEmpty(recipeName))
             {
-                recipes = recipes.Where(recipe => recipe.Name.Contains(recipeName));
+                recipes = recipes.Where(recipe => recipe.Name.ToLower().Contains(recipeName.ToLower()));
             }
 
             if (!String.IsNullOrEmpty(ingredientName))
             {
                 var recipeIds = from name in unitOfWork.IngredientNameRepo.Get()
-                                where name.Name.Contains(ingredientName) 
+                                where name.Name.ToLower().Contains(ingredientName.ToLower()) 
                                 join ingredient in unitOfWork.IngredientRepo.Get()
                                 on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
                 recipes = (from recipe in recipes join id in recipeIds on recipe.RecipeID equals id select recipe).Distinct();
