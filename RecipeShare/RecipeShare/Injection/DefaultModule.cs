@@ -12,8 +12,7 @@ namespace RecipeShare.Injection
     {
         public override void Load()
         {
-            Bind<IRecipeUnitOfWork>().To<RecipeUnitOfWork>().InTransientScope();
-            Bind<IReviewUnitOfWork>().To<ReviewUnitOfWork>().InTransientScope();
+            Bind<IRepoSet>().To<RepoSet>().InTransientScope();
         }
     }
 }
