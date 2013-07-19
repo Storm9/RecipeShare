@@ -31,5 +31,4 @@ jQuery(document).ready(function () {
         form.attr('action', '/Recipe/Create/')
         form.submit();
     });
-
 });
