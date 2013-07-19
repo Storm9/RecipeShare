@@ -72,6 +72,8 @@
             @Html.ValidationMessageFor(model => model.Instructions)
         </div>
 
+        <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data=""/>
+        
         <p>
             <button id="saveChanges">Save Changes</button>
             <button id="createChild">New Recipe</button>
@@ -85,7 +87,12 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")   
+    @Scripts.Render("~/Scripts/jquery.ui.widget.js")
+    @Scripts.Render("~/Scripts/jquery.iframe-transport.js")
+    @Scripts.Render("~/Scripts/jquery.fileupload.js")
+    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
     @Scripts.Render("~/Scripts/edit-recipe.js")
 
     <script type="text/template" id="newIngredientTemplate">
