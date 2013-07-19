@@ -16,6 +16,5 @@ namespace RecipeShare.DAL
         IGenericRepository<Review> ReviewRepo { get; }
 
         void Save();
-        void Dispose();
     }
 }

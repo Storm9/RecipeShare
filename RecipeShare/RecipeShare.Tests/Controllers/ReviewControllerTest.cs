@@ -4,6 +4,8 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.Web.Mvc;
 using RecipeShare.Models;
+using RecipeShare.DAL;
+using Moq;
 
 namespace RecipeShare.Tests
 {
@@ -78,7 +80,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void ReviewControllerConstructorTest()
         {
-            ReviewController target = new ReviewController();
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object);
             Assert.Inconclusive("TODO: Implement code to verify target");
         }
 
@@ -93,7 +96,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void CreateTest()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;
@@ -113,7 +117,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void CreateTest1()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             Review review = null; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;
@@ -133,7 +138,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void DeleteTest()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;
@@ -153,7 +159,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void DeleteConfirmedTest()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;
@@ -173,7 +180,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void EditTest()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             int id = 0; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;
@@ -193,7 +201,8 @@ namespace RecipeShare.Tests
         [UrlToTest("http://localhost:51331")]
         public void EditTest1()
         {
-            ReviewController target = new ReviewController(); // TODO: Initialize to an appropriate value
+            Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            ReviewController target = new ReviewController(repoSetMock.Object); // TODO: Initialize to an appropriate value
             Review review = null; // TODO: Initialize to an appropriate value
             ActionResult expected = null; // TODO: Initialize to an appropriate value
             ActionResult actual;

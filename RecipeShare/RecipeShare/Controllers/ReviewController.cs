@@ -13,10 +13,10 @@ namespace RecipeShare.Controllers
 {
     public class ReviewController : Controller
     {
-        private RepoSet repoSet;
+        private IRepoSet repoSet;
 
         [Inject]
-        public ReviewController(RepoSet repoSet)
+        public ReviewController(IRepoSet repoSet)
         {
             this.repoSet = repoSet;
         }

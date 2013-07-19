@@ -194,14 +194,10 @@
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IGenericRepository.cs" />
-    <Compile Include="DAL\IRecipeUnitOfWork.cs" />
-    <Compile Include="DAL\IReviewUnitOfWork.cs" />
-    <Compile Include="DAL\IUnitOfWork.cs" />
+    <Compile Include="DAL\IRepoSet.cs" />
     <Compile Include="DAL\RecipeContext.cs" />
     <Compile Include="DAL\RecipeInitializer.cs" />
-    <Compile Include="DAL\RecipeUnitOfWork.cs" />
-    <Compile Include="DAL\ReviewUnitOfWork.cs" />
-    <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="DAL\RepoSet.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -224,6 +220,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Recipes.mdf" />
+    <Content Include="App_Data\Recipes_log.ldf">
+      <DependentUpon>Recipes.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\recipe.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -353,9 +353,7 @@
     <Content Include="Views\Review\Edit.cshtml" />
     <Content Include="Views\Review\Delete.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
