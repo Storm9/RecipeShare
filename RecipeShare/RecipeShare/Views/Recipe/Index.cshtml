@@ -7,8 +7,10 @@
 @section Scripts
 {
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")`
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
+    @Scripts.Render("~/Scripts/recipe_index.js")
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -27,14 +29,15 @@
                     data: { term: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
+                            return { label: item, value: item };
                         }))
 
                     }
                 })
             },
             messages: {
-                noResults: "", results: ""
+                noResults: "",
+                results: ""
             }
         });
     }
@@ -65,7 +68,7 @@
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="item" data-recipeid="@item.RecipeID">
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>

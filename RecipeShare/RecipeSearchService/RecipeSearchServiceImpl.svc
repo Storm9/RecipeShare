@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="RecipeSearchService.ReceipeSearchServiceImpl" CodeBehind="RecipeSearchServiceImpl.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="RecipeSearchService.RecipeSearchServiceImpl" CodeBehind="RecipeSearchServiceImpl.svc.cs" %>

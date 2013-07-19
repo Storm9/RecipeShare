@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using RecipeShare.Models;
 using RecipeShare.DAL;
 using Ninject;
+using CloudinaryDotNet.Actions;
 
 namespace RecipeShare.Controllers
 {
@@ -21,22 +22,36 @@ namespace RecipeShare.Controllers
             this.repoSet = repoSet;
         }
 
+        public JsonResult GetImages(int id = 0)
+        {
+            CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hadwuldso", "748288728926438", "D3F_ieSV77X3IdUy8rWpBePYio8");
+            CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+            ListResourcesResult lrr = cloudinary.ListResourcesByTag(id.ToString(), null);
+            List<string> images = new List<string>();
+
+            foreach (var item in lrr.Resources)
+            {
+                images.Add(item.Uri.Segments[5]);
+            }
+
+
+            return Json(images, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetRecipes(string term)
         {
-            var result = (from recipe in repoSet.RecipeRepo.Get()
-                          where recipe.Name.ToLower().Contains(term.ToLower())
-                          select new { recipe.Name }).Distinct();
-        
-            return Json(result, JsonRequestBehavior.AllowGet);
+            RecipeSearchServiceReference.RecipeSearchServiceClient obj = new RecipeSearchServiceReference.RecipeSearchServiceClient();
+            var result = obj.GetRecipeNames(term);
+
+            return Json(result);
         }
 
         public JsonResult GetIngredients(string term)
         {
-            var result = (from ingredient in repoSet.IngredientNameRepo.Get()
-                          where ingredient.Name.ToLower().Contains(term.ToLower())
-                          select new { ingredient.Name }).Distinct();
+            RecipeSearchServiceReference.RecipeSearchServiceClient obj = new RecipeSearchServiceReference.RecipeSearchServiceClient();
+            var result = obj.GetIngredients(term);
 
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return Json(result);
         }
         
         //
@@ -48,14 +63,14 @@ namespace RecipeShare.Controllers
 
             if (!String.IsNullOrEmpty(recipeName))
             {
-                recipes = recipes.Where(recipe => recipe.Name.Contains(recipeName));
+                recipes = recipes.Where(recipe => recipe.Name.ToLower().Contains(recipeName.ToLower()));
             }
 
             if (!String.IsNullOrEmpty(ingredientName))
             {
-                var recipeIds = from name in repoSet.IngredientNameRepo.Get()
-                                where name.Name.Contains(ingredientName) 
-                                join ingredient in repoSet.IngredientRepo.Get()
+                var recipeIds = from name in unitOfWork.IngredientNameRepo.Get()
+                                where name.Name.ToLower().Contains(ingredientName.ToLower()) 
+                                join ingredient in unitOfWork.IngredientRepo.Get()
                                 on name.IngredientNameID equals ingredient.IngredientNameID select ingredient.RecipeID;
                 recipes = (from recipe in recipes join id in recipeIds on recipe.RecipeID equals id select recipe).Distinct();
             }

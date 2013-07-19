@@ -11,7 +11,7 @@ using System.Data.Linq;
 
 namespace RecipeSearchService
 {
-    public class ReceipeSearchServiceImpl : IRecipeSearchService
+    public class RecipeSearchServiceImpl : IRecipeSearchService
     {
 
         public List<String> GetRecipeNames(string prefix)
@@ -21,15 +21,36 @@ namespace RecipeSearchService
 
             var recipes =
                 from recipe in dc.Recipes
-                where recipe.Name.StartsWith(prefix)
+                where recipe.Name.ToLower().StartsWith(prefix.ToLower())
                 select recipe;
 
-            foreach (var recipe in recipes)
+            if (recipes != null)
             {
-                string name = AjaxControlToolkit.AutoCompleteExtender.CreateAutoCompleteItem(recipe.RecipeID.ToString(), recipe.Name);
+                foreach (var recipe in recipes)
+                {
+                    names.Add(recipe.Name);
+                }
             }
 
             return names;
+        }
+
+        public List<String> GetIngredients(string prefix)
+        {
+            List<String> ingredientNames = new List<String>();
+            RecipeSearchDataClassesDataContext dc = GetDataContext();
+
+            var ingredients =
+                from ingredient in dc.IngredientNames
+                where ingredient.Name.ToLower().StartsWith(prefix.ToLower())
+                select ingredient;
+
+            foreach (var ingredient in ingredients)
+            {
+                ingredientNames.Add(ingredient.Name);
+           } 
+
+            return ingredientNames;
         }
 
         private SqlConnection GetSqlConnection()

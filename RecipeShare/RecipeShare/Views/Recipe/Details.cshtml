@@ -10,8 +10,10 @@
 }
 
 <section id="recipe" data-recipeid="@Model.RecipeID">
+    <section id="images">
+
+    </section>
     <section id="instructions">
-        @*<img src="" class="recipe-img" />*@
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
         @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
         @Html.Partial("Rating", Model)
@@ -80,5 +82,10 @@
 </section>
 
 @section scripts {
-    @Scripts.Render("~/Scripts/recipe-details.js");
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery.ui.widget.js")
+    @Scripts.Render("~/Scripts/jquery.iframe-transport.js")
+    @Scripts.Render("~/Scripts/jquery.fileupload.js")
+    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
+    @Scripts.Render("~/Scripts/recipe-details.js")
 }
