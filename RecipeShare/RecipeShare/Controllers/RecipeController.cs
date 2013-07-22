@@ -164,6 +164,7 @@ namespace RecipeShare.Controllers
 
                 int recipeID = repoSet.RecipeRepo.Entry(recipe).RecipeID;
                 UpdateIngredients(recipeInput.NewIngredients, recipeID);
+                UpdateIngredients(recipeInput.OldIngredients, recipeID);
                 repoSet.Save();
                 return RedirectToAction("Details", new { id = recipeID });
             }
