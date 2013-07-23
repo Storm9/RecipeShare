@@ -80,8 +80,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void RecipeControllerConstructorTest()
         {
             Mock<IRepoSet> mock = new Mock<IRepoSet>();
@@ -96,8 +94,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void CreateTest()
         {
             Mock<IRepoSet> mock = new Mock<IRepoSet>();
@@ -113,8 +109,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void CreateTest1()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -159,8 +153,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void DeleteTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -193,8 +185,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void DeleteConfirmedTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -214,8 +204,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void DetailsTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -235,8 +223,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void EditTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -256,8 +242,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void EditTest1()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -277,8 +261,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void GetIngredientsTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -298,8 +280,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void GetRecipesTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -319,8 +299,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void IndexTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -341,8 +319,6 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [UrlToTest("http://localhost:51331")]
         public void RatingTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
