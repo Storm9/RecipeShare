@@ -113,6 +113,8 @@ namespace RecipeShare.Tests
         // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
         // whether you are testing a page, web service, or a WCF service.
         [TestMethod()]
+        [HostType("ASP.NET")]
+        [UrlToTest("http://localhost:51331")]
         public void CreateTest1()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
@@ -179,10 +181,9 @@ namespace RecipeShare.Tests
             repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
 
             RecipeController target = new RecipeController(repoSetMock.Object);
-            int id = 1; // TODO: Initialize to an appropriate value
+            int id = 1;
             ActionResult actual = target.Delete(id);
             Assert.IsInstanceOfType(actual, typeof(ViewResult));
-            Assert.Inconclusive("Verify the correctness of this test method.");
         }
 
         /// <summary>
