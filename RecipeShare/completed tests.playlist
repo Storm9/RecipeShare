@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="RecipeShare.Tests.RecipeControllerTest.DeleteTest" /><Add Test="RecipeShare.Tests.RecipeControllerTest.CreateTest" /><Add Test="RecipeShare.Tests.RecipeControllerTest.CreateTest1" /><Add Test="RecipeShare.Tests.RecipeControllerTest.RecipeControllerConstructorTest" /></Playlist>

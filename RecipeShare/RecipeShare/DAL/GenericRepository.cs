@@ -31,7 +31,7 @@ namespace RecipeShare.DAL
 
         public TEntity Entry(TEntity entity)
         {
-            return dbSet.Find(entity);
+            return context.Entry(entity).Entity;
         }
 
         public void Update(TEntity entity)
