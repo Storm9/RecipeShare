@@ -1,6 +1,7 @@
 ﻿$.cloudinary.config({ "api_key": "748288728926438", "cloud_name": "hadwuldso" });
 
 jQuery(document).ready(function () {
+
     var recipeID = $("#recipe").data("recipeid");
 
     var images = new Array();
@@ -16,10 +17,12 @@ jQuery(document).ready(function () {
 
     for (var image in images)
     {
-        $($.cloudinary.image(images[image], { width: 200, height: 150, crop: 'fill' })
-            .appendTo($("#images")))
-            .wrap($('<a>', { href: $.cloudinary.url(images[image], {}) })); 
+        $($.cloudinary.image(images[image], { width: 300, height: 225, crop: 'fill' })
+            .appendTo($(".images ul")))
+            .wrap($('<li><a>', { href: $.cloudinary.url(images[image], {}) }));
     }
+
+    $('.images').unslider();
 
     $('#addReviewLink').click(function (event) {
         event.preventDefault();

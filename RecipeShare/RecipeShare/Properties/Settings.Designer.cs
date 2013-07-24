@@ -58,5 +58,14 @@ namespace RecipeShare.Properties {
                 return ((string)(this["ApiSecret"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Scripts/cloudinary_cors.html")]
+        public string CLOUDINARY_CORS {
+            get {
+                return ((string)(this["CLOUDINARY_CORS"]));
+            }
+        }
     }
 }

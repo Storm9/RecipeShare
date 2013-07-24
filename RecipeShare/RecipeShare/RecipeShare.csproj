@@ -295,7 +295,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
-    <Content Include="Scripts\edit-recipe.js" />
+    <Content Include="Scripts\cloudinary_cors.html" />
+    <Content Include="Scripts\image-upload.js" />
+    <Content Include="Scripts\recipe-edit.js" />
     <Content Include="Scripts\jquery.cloudinary.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
     <Content Include="Scripts\jquery.iframe-transport.js" />
@@ -323,6 +325,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts\unslider.js" />
+    <Content Include="Scripts\unslider.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -383,6 +387,7 @@
     <None Include="Service References\RecipeSearchServiceReference\RecipeSearchServiceImpl2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\Shared\ImageUpload.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

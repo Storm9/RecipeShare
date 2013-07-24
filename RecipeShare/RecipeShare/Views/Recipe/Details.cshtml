@@ -10,9 +10,9 @@
 }
 
 <section id="recipe" data-recipeid="@Model.RecipeID">
-    <section id="images">
-
-    </section>
+    <div class="images"><ul></ul></div>
+</section>
+    
     <section id="instructions">
         <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
         @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
@@ -83,6 +83,7 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/unslider.min.js")
     @Scripts.Render("~/Scripts/jquery.cloudinary.js")
     @Scripts.Render("~/Scripts/recipe-details.js")
 }
