@@ -273,13 +273,25 @@ namespace RecipeShare.Tests
         public void DetailsTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
-            RecipeController target = new RecipeController(repoSetMock.Object); // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Details(id);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
+            recipeRepoMock.Setup(a => a.FindById(1)).Returns(new Recipe
+            {
+                RecipeID = 1,
+                ParentID = 0,
+                Rating = 4,
+                Votes = 1,
+                Name = "Omelet",
+                Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices.",
+                Ingredients = new List<Ingredient>
+                {
+                    new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
+                }
+            });
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+            RecipeController target = new RecipeController(repoSetMock.Object);
+            int id = 1;
+            ActionResult actual = target.Details(id);
+            Assert.IsInstanceOfType(actual, typeof(ViewResult));
         }
 
         /// <summary>
@@ -292,13 +304,30 @@ namespace RecipeShare.Tests
         public void EditTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
-            RecipeController target = new RecipeController(repoSetMock.Object); // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Edit(id);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+
+            Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
+            recipeRepoMock.Setup(a => a.FindById(1)).Returns(new Recipe
+            {
+                RecipeID = 1,
+                ParentID = 0,
+                Rating = 4,
+                Votes = 1,
+                Name = "Omelet",
+                Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices.",
+                Ingredients = new List<Ingredient>
+                {
+                    new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
+                }
+            });
+
+            Mock<IGenericRepository<Measure>> measureRepoMock = new Mock<IGenericRepository<Measure>>();
+            // TODO: Create measure list
+
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+            RecipeController target = new RecipeController(repoSetMock.Object);
+            int id = 1;
+            ActionResult actual = target.Edit(id);
+            Assert.IsInstanceOfType(actual, typeof(ViewResult));
         }
 
         /// <summary>
