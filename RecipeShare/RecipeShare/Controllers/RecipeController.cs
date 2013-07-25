@@ -11,6 +11,8 @@ using Ninject;
 using CloudinaryDotNet.Actions;
 using CloudinaryDotNet;
 using System.Configuration;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace RecipeShare.Controllers
 {
@@ -24,14 +26,27 @@ namespace RecipeShare.Controllers
             this.repoSet = repoSet;
         }
 
+        public JsonResult GetSignature(int id = 0)
+        {
+            Api api = new Api(Properties.Settings.Default.CLOUDINARY_URL);
+            SortedDictionary<string, object> parameters = new SortedDictionary<string, object>();
+
+            parameters.Add("callback", HttpContext.Request.Url.Scheme + "://" + HttpContext.Request.Url.Authority + "/" + Properties.Settings.Default.CLOUDINARY_CORS);
+            parameters.Add("tags", id.ToString());
+            parameters.Add("timestamp", ((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds).ToString());
+            parameters.Add("signature", api.GetSign(parameters));
+            parameters.Add("api_key", Properties.Settings.Default.ApiKey);
+            
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetImages(int id = 0)
         {
             // APPHARBOR CONFIG
             //Cloudinary cloudinary = new Cloudinary(ConfigurationManager.AppSettings.Get("CLOUDINARY_URL"));
             
             // LOCAL CONFIG
-            CloudinaryDotNet.Account account = new CloudinaryDotNet.Account("hadwuldso", "748288728926438", "D3F_ieSV77X3IdUy8rWpBePYio8");
-            CloudinaryDotNet.Cloudinary cloudinary = new CloudinaryDotNet.Cloudinary(account);
+            Cloudinary cloudinary = new Cloudinary(Properties.Settings.Default.CLOUDINARY_URL);
             
             ListResourcesResult lrr = cloudinary.ListResourcesByTag(id.ToString(), null);
             List<string> images = new List<string>();

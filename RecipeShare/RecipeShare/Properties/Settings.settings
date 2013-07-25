@@ -14,5 +14,8 @@
     <Setting Name="ApiSecret" Type="System.String" Scope="Application">
       <Value Profile="(Default)">D3F_ieSV77X3IdUy8rWpBePYio8</Value>
     </Setting>
+    <Setting Name="CLOUDINARY_CORS" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Scripts/cloudinary_cors.html</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

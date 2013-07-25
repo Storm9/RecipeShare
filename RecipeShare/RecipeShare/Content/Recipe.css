@@ -144,6 +144,26 @@ ul.r5 {
     background-position-y: -64px;
 }
 
+.images { 
+    position: relative; 
+    overflow: auto; 
+    padding: 0;
+    border: solid;
+    border-width: 1px;
+    border-color: #c8c8c8;
+    margin-bottom: 20px;
+    width: 350px;
+    height: 250px;
+}
+
+.images li { 
+    list-style: circle; 
+}
+
+.images ul li { 
+    float: left; 
+}
+
 #reviews {
     margin: 16px 16px 0 0;
 }
@@ -180,3 +200,27 @@ ul.r5 {
     margin: 10px 0 0 10px;
 }
 
+.upload_panel .drop_zone {
+    width: 500px;
+    height: 100px;
+    vertical-align: middle;
+    border: 2px dashed #000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.upload_panel .drop_zone #label {
+    text-align: center;
+    z-index: 100;
+    font-weight: bold;
+    font-size: 20px;
+    color: #000;
+}
+
+.image_upload {
+    position: absolute;
+    width: 500px;
+    height: 100px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}

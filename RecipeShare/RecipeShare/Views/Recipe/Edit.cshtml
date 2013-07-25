@@ -1,6 +1,8 @@
 ﻿@model RecipeShare.Models.RecipeInputModel
 
 @{
+    @Styles.Render("~/Content/recipe.css")
+    
     ViewBag.Title = "Editing " + Model.Name;
     List<RecipeShare.Models.Measure> measureNames = (List<RecipeShare.Models.Measure>)ViewData["MeasureNames"];
     List<RecipeShare.Models.IngredientName> ingredientNames = (List<RecipeShare.Models.IngredientName>)ViewData["IngredientNames"];
@@ -10,6 +12,10 @@
     
     RecipeShare.Models.Ingredient emptyIngredient = new RecipeShare.Models.Ingredient();
 }
+
+<section id="recipe" data-recipeid="@Model.RecipeID">
+    <div class="images"><ul></ul></div>
+</section>
 
 @using (Html.BeginForm())
 {
@@ -63,7 +69,7 @@
                 </div>
             }
         </fieldset>
-        <button id="addIngredient">Add Ingredient...</button>
+        <button id="addIngredient">Add Ingredient</button>
         <div class="editor-label">
             @Html.LabelFor(model => model.Instructions)
         </div>
@@ -72,8 +78,11 @@
             @Html.ValidationMessageFor(model => model.Instructions)
         </div>
 
-        <input name="file" type="file" class="cloudinary-fileupload" data-cloudinary-field="image_upload" data-form-data=""/>
-        
+        <section id="image" data-recipeid="@Model.RecipeID">
+            @Html.Partial("ImageUpload")
+        </section>
+
+
         <p>
             <button id="saveChanges">Save Changes</button>
             <button id="createChild">New Recipe</button>
@@ -86,14 +95,17 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
+@section Scripts 
+{
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")   
+    @Scripts.Render("~/bundles/jqueryval") 
+    @Scripts.Render("~/Scripts/unslider.min.js")  
     @Scripts.Render("~/Scripts/jquery.ui.widget.js")
     @Scripts.Render("~/Scripts/jquery.iframe-transport.js")
     @Scripts.Render("~/Scripts/jquery.fileupload.js")
     @Scripts.Render("~/Scripts/jquery.cloudinary.js")
-    @Scripts.Render("~/Scripts/edit-recipe.js")
+    @Scripts.Render("~/Scripts/recipe-edit.js")
+    @Scripts.Render("~/Scripts/image-upload.js")
 
     <script type="text/template" id="newIngredientTemplate">
         <div class="new-ingredient">
