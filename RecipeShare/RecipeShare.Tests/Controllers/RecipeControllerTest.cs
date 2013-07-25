@@ -137,15 +137,15 @@ namespace RecipeShare.Tests
             repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
 
             Mock<IGenericRepository<Ingredient>> ingredientRepoMock = new Mock<IGenericRepository<Ingredient>>();
-            List<Ingredient> addedIngredients = new List<Ingredient>();
+            int addedIngredients = 0;
             ingredientRepoMock.Setup(a => a.Update(It.IsAny<Ingredient>())).Callback(() => Assert.Fail("Should Not update Ingredients in the Create action."));
-            ingredientRepoMock.Setup(a => a.Insert(It.IsAny<Ingredient>())).Callback((Ingredient i) => addedIngredients.Add(i));
+            ingredientRepoMock.Setup(a => a.Insert(It.IsAny<Ingredient>())).Callback(() => addedIngredients++);
             repoSetMock.Setup(a => a.IngredientRepo).Returns(ingredientRepoMock.Object);
 
             RecipeController target = new RecipeController(repoSetMock.Object);
             ActionResult actual = target.Create(recipeInput);
 
-            Assert.AreEqual(ingredients, addedIngredients);
+            Assert.AreEqual(ingredients.Count, addedIngredients);
             Assert.IsInstanceOfType(actual, typeof(RedirectToRouteResult));
         }
 
@@ -319,11 +319,30 @@ namespace RecipeShare.Tests
                     new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
                 }
             });
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
 
             Mock<IGenericRepository<Measure>> measureRepoMock = new Mock<IGenericRepository<Measure>>();
-            // TODO: Create measure list
+            measureRepoMock.Setup(a => a.Get()).Returns(new List<Measure>()
+            {
+                new Measure
+                {
+                    MeasureID = 1,
+                    Name = "Cups"
+                }
+            });
+            repoSetMock.Setup(a => a.MeasureRepo).Returns(measureRepoMock.Object);
 
-            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+            Mock<IGenericRepository<IngredientName>> ingredientNameRepoMock = new Mock<IGenericRepository<IngredientName>>();
+            ingredientNameRepoMock.Setup(a => a.Get()).Returns(new List<IngredientName>
+            {
+                new IngredientName
+                {
+                    IngredientNameID = 1,
+                    Name = "eggs"
+                }
+            });
+            repoSetMock.Setup(a => a.IngredientNameRepo).Returns(ingredientNameRepoMock.Object);
+
             RecipeController target = new RecipeController(repoSetMock.Object);
             int id = 1;
             ActionResult actual = target.Edit(id);
