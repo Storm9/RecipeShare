@@ -98,6 +98,12 @@ namespace RecipeShare.Tests
         public void CreateTest()
         {
             Mock<IRepoSet> mock = new Mock<IRepoSet>();
+            Mock<IGenericRepository<Measure>> measureRepoMock = new Mock<IGenericRepository<Measure>>();
+            measureRepoMock.SetupAllProperties();
+            mock.Setup(a => a.MeasureRepo).Returns(measureRepoMock.Object);
+            Mock<IGenericRepository<IngredientName>> ingredientNameRepoMock = new Mock<IGenericRepository<IngredientName>>();
+            ingredientNameRepoMock.SetupAllProperties();
+            mock.Setup(a => a.IngredientNameRepo).Returns(ingredientNameRepoMock.Object);
             RecipeController target = new RecipeController(mock.Object);
             ActionResult actual = target.Create();
             Assert.IsInstanceOfType(actual, typeof(ViewResult));
