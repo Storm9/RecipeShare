@@ -13,8 +13,80 @@
 
 @section Styles 
 {
+<<<<<<< HEAD
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Recipe</legend>
+
+        @Html.HiddenFor(model => model.RecipeID)
+        @Html.HiddenFor(model => model.ParentID)
+        @Html.HiddenFor(model => model.Rating)
+        @Html.HiddenFor(model => model.Votes)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+        <fieldset id="ingredientsList">
+            <legend>Ingredients</legend>
+            @for (int index = 0; index < Model.OldIngredients.Count(); index++)
+            {
+                var ingredient = Model.OldIngredients.ElementAt(index);
+                <div class="ingredient-editor">
+
+                    @Html.Hidden("OldIngredients[" + index + "].IngredientID", ingredient.IngredientID)
+                    @Html.Hidden("OldIngredients[" + index + "].RecipeID", Model.RecipeID)
+
+                    <span class="editor-field">
+                        @Html.TextBox("OldIngredients[" + index + "].Quantity", ingredient.Quantity)
+                        @Html.ValidationMessageFor(model => ingredient.Quantity)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.TextBox("OldIngredients[" + index + "].Measure", new SelectList(measureNames, "MeasureID", "Name", ingredient.Measure))
+                        @Html.ValidationMessageFor(model => ingredient.Measure)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.DropDownList("OldIngredients[" + index + "].IngredientName", new SelectList(ingredientNames, "IngredientNameID", "Name", ingredient.IngredientName))
+                        @Html.ValidationMessageFor(model => ingredient.IngredientName)
+                    </span>
+
+                    <span class="editor-field">
+                        @Html.TextBox("OldIngredients[" + index + "].Description", ingredient.Description)
+                        @Html.ValidationMessageFor(model => ingredient.Description)
+                    </span>
+                </div>
+            }
+        </fieldset>
+        <button id="addIngredient">Add Ingredient</button>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Instructions)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.Instructions)
+            @Html.ValidationMessageFor(model => model.Instructions)
+        </div>
+
+        <section id="image" data-recipeid="@Model.RecipeID">
+            @Html.Partial("ImageUpload")
+        </section>
+
+
+        <p>
+            <button id="saveChanges">Save Changes</button>
+            <button id="createChild">New Recipe</button>
+        </p>
+    </fieldset>
+=======
     @Styles.Render("~/Content/recipe.css")
     @Styles.Render("~/Content/feature-carousel.css")
+>>>>>>> 1ce6cc02e0d030f79f066521fca671e8782bc577
 }
 
 @section Scripts 

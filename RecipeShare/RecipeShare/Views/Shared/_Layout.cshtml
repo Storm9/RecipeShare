@@ -6,7 +6,7 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/Site.css")
-        @RenderSection("css", required: false)
+        @RenderSection("Styles", required: false)
         @Scripts.Render("~/bundles/modernizr")
 
     </head>
@@ -20,12 +20,12 @@
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                    <nav>
+                    @*<nav>
                         <ul id="menu">
                             <li>@Html.ActionLink("Recipes", "Index", "Recipe")</li>
                             <li>@Html.ActionLink("Add Recipe", "Create", "Recipe")</li>
                         </ul>
-                    </nav>
+                    </nav>*@
                 </div>
             </div>
         </header>
@@ -44,6 +44,6 @@
         </footer>
 
         @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        @RenderSection("Scripts", required: false)
     </body>
 </html>

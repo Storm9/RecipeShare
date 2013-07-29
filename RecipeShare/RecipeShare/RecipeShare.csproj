@@ -228,6 +228,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\feature-carousel.css" />
     <Content Include="Content\recipe.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -285,6 +286,10 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\arrow-left.png" />
+    <Content Include="Images\arrow-right.png" />
+    <Content Include="Images\blank-recipe.jpg" />
+    <Content Include="Images\delete.png" />
     <Content Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -292,6 +297,7 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\cloudinary_cors.html" />
     <Content Include="Scripts\image-upload.js" />
+    <Content Include="Scripts\jquery.featureCarousel.min.js" />
     <Content Include="Scripts\recipe-edit.js" />
     <Content Include="Scripts\jquery.cloudinary.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
@@ -312,7 +318,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\recipe_index.js" />
+    <Content Include="Scripts\recipe-index.js" />
     <None Include="Service References\RecipeSearchServiceReference\RecipeSearchServiceImpl.disco" />
     <None Include="Service References\RecipeSearchServiceReference\configuration91.svcinfo" />
     <None Include="Service References\RecipeSearchServiceReference\configuration.svcinfo" />
@@ -320,8 +326,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Scripts\unslider.js" />
-    <Content Include="Scripts\unslider.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
