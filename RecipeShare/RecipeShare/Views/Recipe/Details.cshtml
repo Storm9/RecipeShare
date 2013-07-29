@@ -63,28 +63,6 @@
     </p>
 </section>
 
-    <section id="reviews">
-        <h3>Reviews:</h3>
-        <a href="#" id="addReviewLink">Add Review...</a>
-    <ul>
-        @foreach (var review in Model.Reviews)
-        {
-            <li>
-                <h3 class="review-author">@review.Name</h3>
-                <p class="review">@review.Entry</p>
-
-                @Html.ActionLink("Edit", "Edit", "Review", new { id = review.ReviewID }, null)
-                @Html.ActionLink("Delete", "Delete", "Review", new { id = review.ReviewID }, null)
-
-            </li>
-        }
-    </ul>
-
-    </section>
-
-    <div>@Html.ActionLink("Delete", "Delete", new { id = Model.RecipeID })</div>
-
-
 <section id="childRecipes">
     <h3>Related Recipes</h3>
     <ul>
@@ -97,3 +75,26 @@
         }
     </ul>
 </section>
+
+<section id="reviews">
+    <h3>Reviews:</h3>
+    <a href="#" id="addReviewLink">Add Review...</a>
+<ul>
+    @foreach (var review in Model.Reviews)
+    {
+        <li>
+            <h3 class="review-author">@review.Name</h3>
+            <p class="review">@review.Entry</p>
+
+            @Html.ActionLink("Edit", "Edit", "Review", new { id = review.ReviewID }, null)
+            @Html.ActionLink("Delete", "Delete", "Review", new { id = review.ReviewID }, null)
+
+        </li>
+    }
+</ul>
+
+</section>
+
+<div>@Html.ActionLink("Delete", "Delete", new { id = Model.RecipeID })</div>
+
+

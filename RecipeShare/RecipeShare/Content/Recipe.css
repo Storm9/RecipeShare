@@ -1,6 +1,9 @@
 ﻿#recipe {
     float: left;
     width: 600px;
+    border-width: 0 1px 0 0;
+    border-style: solid;
+    border-color: black;
 }
 
     #recipe .recipe-img {
@@ -166,6 +169,7 @@ ul.r5 {
 
 #reviews {
     margin: 16px 16px 0 0;
+    width: 600px;
 }
 
     #reviews ul {
