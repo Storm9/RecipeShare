@@ -130,17 +130,58 @@ namespace RecipeShare.Controllers
             }
             return View(recipe);
         }
-   
-        private void UpdateIngredients(IEnumerable<Ingredient> ingredients, int recipeID = 0)
+
+        private int autocompleteHelper(Type type, String name)
+        {
+            if (type == typeof(Measure))
+            {
+                var measures = (from measure in repoSet.MeasureRepo.Get() where measure.Name == name select measure);
+                if(measures.Count() == 0)
+                {
+                    Measure newMeasure = new Measure{ Name = name };
+                    repoSet.MeasureRepo.Insert(new Measure{ Name = name });
+                    return repoSet.MeasureRepo.Entry(newMeasure).MeasureID;
+                }
+                return measures.SingleOrDefault().MeasureID;
+            }
+            else if (type == typeof(IngredientName))
+            {
+                var ingredientNames = (from ingredientName in repoSet.IngredientNameRepo.Get() where ingredientName.Name == name select ingredientName);
+                if (ingredientNames.Count() == 0)
+                {
+                    IngredientName newIngredientName = new IngredientName { Name = name };
+                    repoSet.IngredientNameRepo.Insert(newIngredientName);
+                    return repoSet.IngredientNameRepo.Entry(newIngredientName).IngredientNameID;
+                }
+                return ingredientNames.SingleOrDefault().IngredientNameID;
+            }
+            else
+            {
+                throw new System.ArgumentException("type must be Measure or IngredientName", "type");
+            }
+        }
+           
+        private void UpdateIngredients(IEnumerable<IngredientInputModel> ingredients, int recipeID = 0)
         {
             if (ingredients != null)
             {
-                foreach (Ingredient ingredient in ingredients)
+                foreach (IngredientInputModel input in ingredients)
                 {
-                    if (ingredient.MeasureID == 0)
+                    Ingredient ingredient = new Ingredient
+                    {
+                        Quantity = input.Quantity,
+                        Description = input.Description
+                        
+                    };
+                    if (input.Measure == "")
                     {
                         ingredient.MeasureID = null;
                     }
+                    else
+                    {
+                        ingredient.MeasureID = autocompleteHelper(typeof(Measure), input.Measure);
+                    }
+                    ingredient.IngredientNameID = autocompleteHelper(typeof(IngredientName), input.IngredientName);
                     if (recipeID == 0)
                     {
                         repoSet.IngredientRepo.Update(ingredient);

@@ -26,8 +26,8 @@ namespace RecipeShare.Models
         [MaxLength(1000, ErrorMessage = "Instructions must be 1000 characters or less.")]
         public string Instructions { get; set; }
 
-        public IEnumerable<Ingredient> OldIngredients { get; set; }
-        public IEnumerable<Ingredient> NewIngredients { get; set; }
+        public IEnumerable<IngredientInputModel> OldIngredients { get; set; }
+        public IEnumerable<IngredientInputModel> NewIngredients { get; set; }
 
         public void populateFromRecipe(Recipe recipe)
         {
@@ -37,7 +37,27 @@ namespace RecipeShare.Models
             Votes = recipe.Votes;
             Name = recipe.Name;
             Instructions = recipe.Instructions;
-            OldIngredients = recipe.Ingredients.AsEnumerable();
+            List<IngredientInputModel> tempIngredients = new List<IngredientInputModel>();
+            foreach (Ingredient i in recipe.Ingredients.AsEnumerable())
+            {
+                IngredientInputModel input = new IngredientInputModel
+                {
+                    IngredientID = i.IngredientID,
+                    RecipeID = i.RecipeID,
+                    Quantity = i.Quantity,
+                    Description = i.Description
+                };
+                if (i.IngredientName != null)
+                {
+                    input.IngredientName = i.IngredientName.Name;
+                }
+                if (i.Measure != null)
+                {
+                    input.Measure = i.Measure.Name;
+                }
+                tempIngredients.Add(input);
+            }
+            OldIngredients = tempIngredients;
         }
 
         public Recipe toRecipe()

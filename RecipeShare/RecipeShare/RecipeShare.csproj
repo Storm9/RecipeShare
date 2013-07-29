@@ -208,6 +208,7 @@
     <Compile Include="Injection\NinjectControllerFactory.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\IngredientInputModel.cs" />
     <Compile Include="Models\IngredientName.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Measure.cs" />

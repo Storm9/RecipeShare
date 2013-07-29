@@ -53,13 +53,13 @@
                     </span>
 
                     <span class="editor-field">
-                        @Html.DropDownList("OldIngredients[" + index + "].MeasureID", new SelectList(measureNames, "MeasureID", "Name", ingredient.MeasureID))
-                        @Html.ValidationMessageFor(model => ingredient.MeasureID)
+                        @Html.TextBox("OldIngredients[" + index + "].Measure", new SelectList(measureNames, "MeasureID", "Name", ingredient.Measure))
+                        @Html.ValidationMessageFor(model => ingredient.Measure)
                     </span>
 
                     <span class="editor-field">
-                        @Html.DropDownList("OldIngredients[" + index + "].IngredientNameID", new SelectList(ingredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID))
-                        @Html.ValidationMessageFor(model => ingredient.IngredientNameID)
+                        @Html.DropDownList("OldIngredients[" + index + "].IngredientName", new SelectList(ingredientNames, "IngredientNameID", "Name", ingredient.IngredientName))
+                        @Html.ValidationMessageFor(model => ingredient.IngredientName)
                     </span>
 
                     <span class="editor-field">
@@ -117,13 +117,13 @@
             </span>
 
             <span class="editor-field">
-                @Html.DropDownList("NewIngredients[{0}].MeasureID", new SelectList(measureNames, "MeasureID", "Name"))
-                @Html.ValidationMessage("MeasureID", emptyIngredient)
+                @Html.TextBox("NewIngredients[{0}].Measure")
+                @Html.ValidationMessage("Measure", emptyIngredient)
             </span>
 
             <span class="editor-field">
-                @Html.DropDownList("NewIngredients[{0}].IngredientNameID", new SelectList(ingredientNames, "IngredientNameID", "Name"))
-                @Html.ValidationMessage("IngredientNameID", emptyIngredient)
+                @Html.TextBox("NewIngredients[{0}].IngredientName")
+                @Html.ValidationMessage("IngredientName", emptyIngredient)
             </span>
 
             <span class="editor-field">
