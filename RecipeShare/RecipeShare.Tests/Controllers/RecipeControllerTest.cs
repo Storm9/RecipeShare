@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using System.Web.Mvc;
 
@@ -13,8 +14,8 @@ using Moq;
 
 namespace RecipeShare.Tests
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for RecipeControllerTest and is intended
     ///to contain all RecipeControllerTest Unit Tests
@@ -97,6 +98,12 @@ namespace RecipeShare.Tests
         public void CreateTest()
         {
             Mock<IRepoSet> mock = new Mock<IRepoSet>();
+            Mock<IGenericRepository<Measure>> measureRepoMock = new Mock<IGenericRepository<Measure>>();
+            measureRepoMock.SetupAllProperties();
+            mock.Setup(a => a.MeasureRepo).Returns(measureRepoMock.Object);
+            Mock<IGenericRepository<IngredientName>> ingredientNameRepoMock = new Mock<IGenericRepository<IngredientName>>();
+            ingredientNameRepoMock.SetupAllProperties();
+            mock.Setup(a => a.IngredientNameRepo).Returns(ingredientNameRepoMock.Object);
             RecipeController target = new RecipeController(mock.Object);
             ActionResult actual = target.Create();
             Assert.IsInstanceOfType(actual, typeof(ViewResult));
@@ -111,6 +118,10 @@ namespace RecipeShare.Tests
         [TestMethod()]
         public void CreateTest1()
         {
+            List<Ingredient> ingredients = new List<Ingredient>
+            {
+                new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
+            };
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
 
             Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
@@ -121,13 +132,10 @@ namespace RecipeShare.Tests
                 Votes = 1,
                 Name = "Omelet",
                 Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices.",
-                NewIngredients = new List<Ingredient>
-                {
-                    new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
-                }
+                NewIngredients = ingredients
             };
             var newRecipe = recipeInput.toRecipe();
-            recipeRepoMock.Setup(a => a.Insert(It.IsAny<Recipe>())).Callback(() => 
+            recipeRepoMock.Setup(a => a.Insert(It.IsAny<Recipe>())).Callback(() =>
             {
                 newRecipe.RecipeID = 1;
             });
@@ -135,14 +143,15 @@ namespace RecipeShare.Tests
             repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
 
             Mock<IGenericRepository<Ingredient>> ingredientRepoMock = new Mock<IGenericRepository<Ingredient>>();
-            List<Ingredient> addedIngredients = new List<Ingredient>();
+            int addedIngredients = 0;
             ingredientRepoMock.Setup(a => a.Update(It.IsAny<Ingredient>())).Callback(() => Assert.Fail("Should Not update Ingredients in the Create action."));
-            ingredientRepoMock.Setup(a => a.Insert(It.IsAny<Ingredient>())).Callback((Ingredient i) => addedIngredients.Add(i));
+            ingredientRepoMock.Setup(a => a.Insert(It.IsAny<Ingredient>())).Callback(() => addedIngredients++);
             repoSetMock.Setup(a => a.IngredientRepo).Returns(ingredientRepoMock.Object);
 
             RecipeController target = new RecipeController(repoSetMock.Object);
             ActionResult actual = target.Create(recipeInput);
 
+            Assert.AreEqual(ingredients.Count, addedIngredients);
             Assert.IsInstanceOfType(actual, typeof(RedirectToRouteResult));
         }
 
@@ -187,14 +196,77 @@ namespace RecipeShare.Tests
         [TestMethod()]
         public void DeleteConfirmedTest()
         {
+            Recipe deleted = new Recipe
+            {
+                RecipeID = 2,
+                ParentID = 0,
+                Rating = 1,
+                Votes = 1,
+                Name = "PB&J Sandwich",
+                Instructions = "Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"
+            };
+
+            Recipe expectedNewParent = new Recipe
+            {
+                RecipeID = 4,
+                ParentID = 2,
+                Rating = 5,
+                Votes = 20,
+                Name = "PB & Jam Sandwich",
+                Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"
+            };
+
+            int expectedUpdated = 3;
+
+            List<Recipe> recipes = new List<Recipe>
+            {
+                new Recipe
+                {
+                    RecipeID = 1,
+                    ParentID = 0,
+                    Rating = 4,
+                    Votes = 1,
+                    Name = "Omelet",
+                    Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices."
+                },
+                deleted,
+                new Recipe
+                {
+                    RecipeID = 3,
+                    ParentID = 2,
+                    Rating = 3,
+                    Votes = 10,
+                    Name = "PB & Nutella Sandwich",
+                    Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"
+                },
+                new Recipe
+                {
+                    RecipeID = 4,
+                    ParentID = 2,
+                    Rating = 5,
+                    Votes = 20,
+                    Name = "PB & Jam Sandwich",
+                    Instructions = "This is a variation to the standard PB&J Sandwich. Spread ingredients on each slice separately, or mix it if you'd like! It's up to you! Put both slices together or fold and enjoy!"
+                }
+            };
+
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
+            Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
+            recipeRepoMock.Setup(a => a.FindById(It.IsAny<int>())).Returns((int i) => (from r in recipes where r.RecipeID == i select r).SingleOrDefault<Recipe>());
+            recipeRepoMock.Setup(a => a.Get()).Returns(recipes);
+            recipeRepoMock.Setup(a => a.Delete(It.IsAny<Recipe>())).Callback((Recipe r) => Assert.AreEqual(r, deleted));
+
+            int actualUpdated = 0;
+            recipeRepoMock.Setup(a => a.Update(It.IsAny<Recipe>())).Callback(() => actualUpdated++);
+
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+
             RecipeController target = new RecipeController(repoSetMock.Object); // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.DeleteConfirmed(id);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            int id = 2; // TODO: Initialize to an appropriate value
+            ActionResult actual = target.DeleteConfirmed(id);
+            recipeRepoMock.Verify(a => a.Delete(It.IsAny<Recipe>()), Times.Once());
+            Assert.IsInstanceOfType(actual, typeof(RedirectToRouteResult));
+            Assert.AreEqual(expectedUpdated, actualUpdated);
         }
 
         /// <summary>
@@ -207,13 +279,25 @@ namespace RecipeShare.Tests
         public void DetailsTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
-            RecipeController target = new RecipeController(repoSetMock.Object); // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Details(id);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
+            recipeRepoMock.Setup(a => a.FindById(1)).Returns(new Recipe
+            {
+                RecipeID = 1,
+                ParentID = 0,
+                Rating = 4,
+                Votes = 1,
+                Name = "Omelet",
+                Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices.",
+                Ingredients = new List<Ingredient>
+                {
+                    new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
+                }
+            });
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+            RecipeController target = new RecipeController(repoSetMock.Object);
+            int id = 1;
+            ActionResult actual = target.Details(id);
+            Assert.IsInstanceOfType(actual, typeof(ViewResult));
         }
 
         /// <summary>
@@ -226,13 +310,49 @@ namespace RecipeShare.Tests
         public void EditTest()
         {
             Mock<IRepoSet> repoSetMock = new Mock<IRepoSet>();
-            RecipeController target = new RecipeController(repoSetMock.Object); // TODO: Initialize to an appropriate value
-            int id = 0; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Edit(id);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+
+            Mock<IGenericRepository<Recipe>> recipeRepoMock = new Mock<IGenericRepository<Recipe>>();
+            recipeRepoMock.Setup(a => a.FindById(1)).Returns(new Recipe
+            {
+                RecipeID = 1,
+                ParentID = 0,
+                Rating = 4,
+                Votes = 1,
+                Name = "Omelet",
+                Instructions = "Add onion, tomato, and spinach to pan and gently stir fry in vegetable oil for 2 minutes. Pour beaten eggs evenly over the mixture and let it coagulate. Add in shredded bacon and cheese at the end to melt in. Season with your favorite spices.",
+                Ingredients = new List<Ingredient>
+                {
+                    new Ingredient {RecipeID = 1, Quantity = 3, IngredientNameID = 1, Description = "beaten"}
+                }
+            });
+            repoSetMock.Setup(a => a.RecipeRepo).Returns(recipeRepoMock.Object);
+
+            Mock<IGenericRepository<Measure>> measureRepoMock = new Mock<IGenericRepository<Measure>>();
+            measureRepoMock.Setup(a => a.Get()).Returns(new List<Measure>()
+            {
+                new Measure
+                {
+                    MeasureID = 1,
+                    Name = "Cups"
+                }
+            });
+            repoSetMock.Setup(a => a.MeasureRepo).Returns(measureRepoMock.Object);
+
+            Mock<IGenericRepository<IngredientName>> ingredientNameRepoMock = new Mock<IGenericRepository<IngredientName>>();
+            ingredientNameRepoMock.Setup(a => a.Get()).Returns(new List<IngredientName>
+            {
+                new IngredientName
+                {
+                    IngredientNameID = 1,
+                    Name = "eggs"
+                }
+            });
+            repoSetMock.Setup(a => a.IngredientNameRepo).Returns(ingredientNameRepoMock.Object);
+
+            RecipeController target = new RecipeController(repoSetMock.Object);
+            int id = 1;
+            ActionResult actual = target.Edit(id);
+            Assert.IsInstanceOfType(actual, typeof(ViewResult));
         }
 
         /// <summary>

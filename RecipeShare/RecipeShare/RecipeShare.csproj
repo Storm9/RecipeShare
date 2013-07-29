@@ -42,9 +42,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AjaxControlToolkit">
-      <HintPath>..\packages\AjaxControlToolkit.7.0607\lib\45\AjaxControlToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="CloudinaryDotNet">
       <HintPath>..\packages\CloudinaryDotNet.1.0.5\lib\net35\CloudinaryDotNet.dll</HintPath>
     </Reference>
@@ -370,7 +367,6 @@
     </Content>
     <Content Include="Views\Recipe\Index.cshtml" />
     <Content Include="Views\Recipe\Details.cshtml" />
-    <Content Include="Views\Recipe\Create.cshtml" />
     <Content Include="Views\Recipe\Edit.cshtml" />
     <Content Include="Views\Recipe\Delete.cshtml" />
     <Content Include="Views\Shared\Rating.cshtml" />
@@ -389,6 +385,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Views\Shared\ImageUpload.cshtml" />
+    <Content Include="Views\Recipe\Create.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

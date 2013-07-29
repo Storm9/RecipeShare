@@ -171,9 +171,16 @@ namespace RecipeShare.Controllers
         //
         // GET: /Recipe/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
-            return View();
+            RecipeInputModel recipe = new RecipeInputModel();
+            ViewData["MeasureNames"] = (from measure in repoSet.MeasureRepo.Get() select measure).ToList();
+            ViewData["IngredientNames"] = (from ingredient in repoSet.IngredientNameRepo.Get() select ingredient).ToList();
+            if (recipe == null)
+            {
+                return HttpNotFound();
+            }
+            return View(recipe);
         }
 
         //
