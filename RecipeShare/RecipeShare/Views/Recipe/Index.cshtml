@@ -4,48 +4,20 @@
     ViewBag.Title = "Recipes";
 }
 
+@section Styles 
+{
+    @Styles.Render("~/Content/feature-carousel.css")
+}
+
 @section Scripts
 {
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/jquery.featureCarousel.min.js")
     @Scripts.Render("~/Scripts/jquery.cloudinary.js")
-    @Scripts.Render("~/Scripts/recipe_index.js")
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        autoComplete("#recipeName", "/Recipe/GetRecipes");
-        autoComplete("#ingredientName", "/Recipe/GetIngredients");
-    });
-
-    function autoComplete(id, path)
-    {
-        $(id).autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: path,
-                    type: "POST",
-                    dataType: "json",
-                    data: { term: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item, value: item };
-                        }))
-
-                    }
-                })
-            },
-            messages: {
-                noResults: "",
-                results: ""
-            }
-        });
-    }
-</script>
+    @Scripts.Render("~/Scripts/recipe-index.js")
 }
-
-
-<h2>Index</h2>
 
 <p> 
     @using (Html.BeginForm())
@@ -56,28 +28,27 @@
     } 
 </p>
 
+<div class="carousel-container">
+    <div id="carousel">
+        @foreach (var item in Model)
+        {
+            <div class="carousel-feature" data-recipeid="@item.RecipeID" data-recipename="@item.Name">
+                <a class="carousel-link" href="#">
+                    <img class="carousel-image" alt="" src="#"></a>
+                <div class="carousel-caption">
+                    <p></p>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="carousel-left">
+        <img src="@Url.Content("~/Images/arrow-left.png")" />
+    </div>
+    <div id="carousel-right">
+        <img src="@Url.Content("~/Images/arrow-right.png")" />
+    </div>
+</div>
+
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New Recipe", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr class="item" data-recipeid="@item.RecipeID">
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.RecipeID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.RecipeID }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.RecipeID })
-        </td>
-    </tr>
-}
-
-</table>

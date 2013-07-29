@@ -15,14 +15,25 @@ jQuery(document).ready(function () {
         success: function (data) { images = data; },
     });
 
-    for (var image in images)
-    {
-        $($.cloudinary.image(images[image], { width: 300, height: 225, crop: 'fill' })
-            .appendTo($(".images ul")))
-            .wrap($('<li><a>', { href: $.cloudinary.url(images[image], {}) }));
-    }
 
-    $('.images').unslider();
+    if (images.length > 0)
+    {
+        for (var image in images)
+        {
+            $('<div class="carousel-feature"><a class="carousel-link" href="' 
+              + $.cloudinary.url(images[image], {}) + 
+              '"><img class="carousel-image" src="'
+              + $.cloudinary.url(images[image], { width: 500, height: 375, crop: 'pad' }) +
+              '"></a></div>').appendTo($("#carousel"));
+        }
+
+        $(".carousel-container").attr("style", "display:block");
+        
+        $("#carousel").featureCarousel({
+            //autoPlay: false,
+            trackerIndividual: false,
+        });
+    }
 
     $('#addReviewLink').click(function (event) {
         event.preventDefault();

@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
 
     $.ajax(
     {
-        url: "/Recipe/GetSignature/" + recipeID,
+        url: "/Recipe/GetUploadSignature/" + recipeID,
         type: 'get',
         dataType: 'json',
         async: false,

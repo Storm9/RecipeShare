@@ -26,7 +26,7 @@ namespace RecipeShare.Controllers
             this.repoSet = repoSet;
         }
 
-        public JsonResult GetSignature(int id = 0)
+        public JsonResult GetUploadSignature(int id = 0)
         {
             Api api = new Api(Properties.Settings.Default.CLOUDINARY_URL);
             SortedDictionary<string, object> parameters = new SortedDictionary<string, object>();
@@ -37,6 +37,19 @@ namespace RecipeShare.Controllers
             parameters.Add("signature", api.GetSign(parameters));
             parameters.Add("api_key", Properties.Settings.Default.ApiKey);
             
+            return Json(parameters, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDeleteSignature(string id)
+        {
+            Api api = new Api(Properties.Settings.Default.CLOUDINARY_URL);
+            SortedDictionary<string, object> parameters = new SortedDictionary<string, object>();
+
+            parameters.Add("public_id", id);
+            parameters.Add("timestamp", ((int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds).ToString());
+            parameters.Add("signature", api.GetSign(parameters));
+            parameters.Add("api_key", Properties.Settings.Default.ApiKey);
+
             return Json(parameters, JsonRequestBehavior.AllowGet);
         }
 

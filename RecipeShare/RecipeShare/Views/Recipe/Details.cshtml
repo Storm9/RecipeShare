@@ -5,44 +5,63 @@
     ViewBag.RecipeID = Model.RecipeID;
 }
 
-@section css {
-    <link href="@Url.Content("~/Content/recipe.css")" rel="stylesheet"/>
+@section Styles 
+{
+    @Styles.Render("~/Content/recipe.css")
+    @Styles.Render("~/Content/feature-carousel.css")
+    @Styles.Render("~/Content/waterwheel-carousel.css")
 }
 
-<section id="recipe" data-recipeid="@Model.RecipeID">
-    <div class="images"><ul></ul></div>
-</section>
-    
-    <section id="instructions">
-        <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
-        @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
-        @Html.Partial("Rating", Model)
-        
-        <ul id="ingredients">
-            @foreach (var ingredient in Model.Ingredients)
-            {
-                <li>
-                    @if (ingredient.Quantity != null)
-                    {
-                        @(ingredient.Quantity + " ")
-                    }
-                    @if (ingredient.Measure != null)
-                    {
-                        @(ingredient.Measure.Name + " ")
-                    }
-                    @(ingredient.IngredientName.Name)
-                    @if (ingredient.Description != null)
-                    {
-                        @(" (" + ingredient.Description + ")")
-                    }
-                </li>
-            }
-        </ul>
+@section Scripts 
+{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/jquery.featureCarousel.min.js")
+    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
+    @Scripts.Render("~/Scripts/recipe-details.js")
+}
 
-        <p id="procedure">
-            @(Model.Instructions)
-        </p>
-    </section>
+<div class="carousel-container" style="display:none">
+    <div id="carousel"></div>
+    <div id="carousel-left">
+        <img src="@Url.Content("~/Images/arrow-left.png")" />
+    </div>
+    <div id="carousel-right">
+        <img src="@Url.Content("~/Images/arrow-right.png")" />
+    </div>
+</div>
+    
+<section id="recipe" data-recipeid="@Model.RecipeID">
+    <span class="recipe-name">@Html.DisplayFor(model => model.Name)</span>
+    @Html.ActionLink("Edit", "Edit/" + Model.RecipeID, "Recipe")
+    @Html.Partial("Rating", Model)
+
+    <ul id="ingredients">
+        @foreach (var ingredient in Model.Ingredients)
+        {
+            <li>
+                @if (ingredient.Quantity != null)
+                {
+                    @(ingredient.Quantity + " ")
+                    }
+                @if (ingredient.Measure != null)
+                {
+                    @(ingredient.Measure.Name + " ")
+                    }
+                @(ingredient.IngredientName.Name)
+                @if (ingredient.Description != null)
+                {
+                    @(" (" + ingredient.Description + ")")
+                    }
+            </li>
+            }
+    </ul>
+
+    <p id="procedure">
+        @(Model.Instructions)
+    </p>
+</section>
 
     <section id="reviews">
         <h3>Reviews:</h3>
@@ -65,8 +84,6 @@
 
     <div>@Html.ActionLink("Delete", "Delete", new { id = Model.RecipeID })</div>
 
-</section>
-
 
 <section id="childRecipes">
     <h3>Related Recipes</h3>
@@ -80,10 +97,3 @@
         }
     </ul>
 </section>
-
-@section scripts {
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/Scripts/unslider.min.js")
-    @Scripts.Render("~/Scripts/jquery.cloudinary.js")
-    @Scripts.Render("~/Scripts/recipe-details.js")
-}
