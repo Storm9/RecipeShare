@@ -13,7 +13,7 @@
 
 @section Styles 
 {
-    @Styles.Render("~/Content/recipe.css")
+    @Styles.Render("~/Content/RecipeEdit.css")
     @Styles.Render("~/Content/feature-carousel.css")
 }
 
@@ -34,22 +34,22 @@
         <div class="new-ingredient">
             @Html.Hidden("NewIngredients[{0}].RecipeID", Model.RecipeID)
 
-            <span class="editor-field">
+            <span class="editor-field quantity">
                 @Html.Editor("NewIngredients[{0}].Quantity")
                 @Html.ValidationMessage("Quantity", emptyIngredient)
             </span>
 
-            <span class="editor-field">
+            <span class="editor-field measure">
                 @Html.TextBox("NewIngredients[{0}].Measure")
                 @Html.ValidationMessage("Measure", emptyIngredient)
             </span>
 
-            <span class="editor-field">
+            <span class="editor-field ingredient-name">
                 @Html.TextBox("NewIngredients[{0}].IngredientName")
                 @Html.ValidationMessage("IngredientName", emptyIngredient)
             </span>
 
-            <span class="editor-field">
+            <span class="editor-field description">
                 @Html.Editor("NewIngredients[{0}].Description")
                 @Html.ValidationMessage("Description", emptyIngredient)
             </span>
@@ -98,22 +98,22 @@
                         @Html.Hidden("OldIngredients[" + index + "].IngredientID", ingredient.IngredientID)
                         @Html.Hidden("OldIngredients[" + index + "].RecipeID", Model.RecipeID)
 
-                        <span class="editor-field">
+                        <span class="editor-field quantity">
                             @Html.TextBox("OldIngredients[" + index + "].Quantity", ingredient.Quantity)
                             @Html.ValidationMessageFor(model => ingredient.Quantity)
                         </span>
 
-                        <span class="editor-field">
-                            @Html.DropDownList("OldIngredients[" + index + "].MeasureID", new SelectList(measureNames, "MeasureID", "Name", ingredient.MeasureID))
-                            @Html.ValidationMessageFor(model => ingredient.MeasureID)
+                        <span class="editor-field measure">
+                            @Html.TextBox("OldIngredients[" + index + "].Measure", ingredient.Measure)
+                            @Html.ValidationMessageFor(model => ingredient.Measure)
                         </span>
 
-                        <span class="editor-field">
-                            @Html.DropDownList("OldIngredients[" + index + "].IngredientNameID", new SelectList(ingredientNames, "IngredientNameID", "Name", ingredient.IngredientNameID))
-                            @Html.ValidationMessageFor(model => ingredient.IngredientNameID)
+                        <span class="editor-field ingredient-name">
+                            @Html.TextBox("OldIngredients[" + index + "].IngredientNameID", ingredient.IngredientName)
+                            @Html.ValidationMessageFor(model => ingredient.IngredientName)
                         </span>
 
-                        <span class="editor-field">
+                        <span class="editor-field description">
                             @Html.TextBox("OldIngredients[" + index + "].Description", ingredient.Description)
                             @Html.ValidationMessageFor(model => ingredient.Description)
                         </span>
