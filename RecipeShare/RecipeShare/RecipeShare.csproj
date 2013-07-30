@@ -296,6 +296,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Scripts\autocomplete.js" />
     <Content Include="Scripts\cloudinary_cors.html" />
     <Content Include="Scripts\image-upload.js" />
     <Content Include="Scripts\jquery.featureCarousel.min.js" />

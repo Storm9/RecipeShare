@@ -70,5 +70,6 @@ namespace RecipeShare.RecipeSearchServiceReference {
         public System.Threading.Tasks.Task<string[]> GetIngredientsAsync(string prefix) {
             return base.Channel.GetIngredientsAsync(prefix);
         }
+
     }
 }

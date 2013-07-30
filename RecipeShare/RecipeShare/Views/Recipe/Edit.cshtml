@@ -30,8 +30,15 @@
     @Scripts.Render("~/Scripts/recipe-edit.js")
     @Scripts.Render("~/Scripts/image-upload.js")
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            autoComplete(".measure", "/Recipe/GetRecipes");
+            autoComplete(".ingredient-name", "/Recipe/GetIngredients");
+        });
+    </script>
+
     <script type="text/template" id="newIngredientTemplate">
-        <div class="new-ingredient">
+        <div class="ingredient-editor new-ingredient">
             @Html.Hidden("NewIngredients[{0}].RecipeID", Model.RecipeID)
 
             <span class="editor-field quantity">
@@ -109,7 +116,7 @@
                         </span>
 
                         <span class="editor-field ingredient-name">
-                            @Html.TextBox("OldIngredients[" + index + "].IngredientNameID", ingredient.IngredientName)
+                            @Html.TextBox("OldIngredients[" + index + "].IngredientName", ingredient.IngredientName)
                             @Html.ValidationMessageFor(model => ingredient.IngredientName)
                         </span>
 

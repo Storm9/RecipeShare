@@ -182,6 +182,8 @@ namespace RecipeShare.Controllers
                 {
                     Ingredient ingredient = new Ingredient
                     {
+                        IngredientID = input.IngredientID,
+                        RecipeID = input.RecipeID,
                         Quantity = input.Quantity,
                         Description = input.Description
                         
